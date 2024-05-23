@@ -5,6 +5,11 @@
  */
 package cerdik.desktop;
 
+import com.sun.prism.paint.Color;
+import static java.awt.Color.black;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+
 /**
  *
  * @author KnightlyTech
@@ -27,21 +32,210 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        PilihAkunText = new javax.swing.JLabel();
+        ApotekerPannel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        PasienPannel = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        DokterPannel = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        NextButton = new javax.swing.JButton();
+        BackButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setPreferredSize(new java.awt.Dimension(1002, 576));
+
+        PilihAkunText.setFont(new java.awt.Font("Impact", 1, 36)); // NOI18N
+        PilihAkunText.setText("Pilih Tipe Akun!");
+
+        ApotekerPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        ApotekerPannel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ApotekerPannelMouseClicked(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jLabel2.setText("Apoteker");
+
+        javax.swing.GroupLayout ApotekerPannelLayout = new javax.swing.GroupLayout(ApotekerPannel);
+        ApotekerPannel.setLayout(ApotekerPannelLayout);
+        ApotekerPannelLayout.setHorizontalGroup(
+            ApotekerPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ApotekerPannelLayout.createSequentialGroup()
+                .addContainerGap(161, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(29, 29, 29))
+        );
+        ApotekerPannelLayout.setVerticalGroup(
+            ApotekerPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ApotekerPannelLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        PasienPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        PasienPannel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                PasienPannelMouseClicked(evt);
+            }
+        });
+
+        jLabel3.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jLabel3.setText("Pasien");
+
+        javax.swing.GroupLayout PasienPannelLayout = new javax.swing.GroupLayout(PasienPannel);
+        PasienPannel.setLayout(PasienPannelLayout);
+        PasienPannelLayout.setHorizontalGroup(
+            PasienPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PasienPannelLayout.createSequentialGroup()
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addGap(29, 29, 29))
+        );
+        PasienPannelLayout.setVerticalGroup(
+            PasienPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PasienPannelLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        DokterPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        DokterPannel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DokterPannelMouseClicked(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jLabel4.setText("Dokter");
+
+        javax.swing.GroupLayout DokterPannelLayout = new javax.swing.GroupLayout(DokterPannel);
+        DokterPannel.setLayout(DokterPannelLayout);
+        DokterPannelLayout.setHorizontalGroup(
+            DokterPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DokterPannelLayout.createSequentialGroup()
+                .addContainerGap(184, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(29, 29, 29))
+        );
+        DokterPannelLayout.setVerticalGroup(
+            DokterPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DokterPannelLayout.createSequentialGroup()
+                .addGap(92, 92, 92)
+                .addComponent(jLabel4)
+                .addContainerGap(146, Short.MAX_VALUE))
+        );
+
+        NextButton.setText("Next");
+
+        BackButton.setText("Back");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(79, 79, 79)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(PilihAkunText)
+                        .addContainerGap(666, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(ApotekerPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(PasienPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(DokterPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(24, 24, 24))))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(55, 55, 55)
+                .addComponent(PilihAkunText)
+                .addGap(79, 79, 79)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(DokterPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PasienPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(ApotekerPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    //Untuk set border seperti button radio
+    public static int jumlahClicked = 1;
+
+
+    private void ApotekerPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ApotekerPannelMouseClicked
+        // TODO add your handling code here:
+        jumlahClicked++;
+        if(jumlahClicked % 2 == 0){
+            ApotekerPannel.setBorder(new LineBorder(black));
+            PasienPannel.setBorder(new BevelBorder(0));
+            DokterPannel.setBorder(new BevelBorder(0));
+        }else{
+            ApotekerPannel.setBorder(new BevelBorder(0));
+        }
+        
+    }//GEN-LAST:event_ApotekerPannelMouseClicked
+
+    private void PasienPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasienPannelMouseClicked
+        // TODO add your handling code here:
+        jumlahClicked++;
+        if(jumlahClicked % 2 == 0){
+            PasienPannel.setBorder(new LineBorder(black));
+            ApotekerPannel.setBorder(new BevelBorder(0));
+            DokterPannel.setBorder(new BevelBorder(0));
+        }else{
+            PasienPannel.setBorder(new BevelBorder(0));
+        }
+        
+    }//GEN-LAST:event_PasienPannelMouseClicked
+
+    private void DokterPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DokterPannelMouseClicked
+        // TODO add your handling code here:
+        jumlahClicked++;
+        if(jumlahClicked % 2 == 0){
+            DokterPannel.setBorder(new LineBorder(black));
+            ApotekerPannel.setBorder(new BevelBorder(0));
+            PasienPannel.setBorder(new BevelBorder(0));
+        }else{
+            DokterPannel.setBorder(new BevelBorder(0));
+        }
+        
+    }//GEN-LAST:event_DokterPannelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -79,5 +273,15 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel ApotekerPannel;
+    private javax.swing.JButton BackButton;
+    private javax.swing.JPanel DokterPannel;
+    private javax.swing.JButton NextButton;
+    private javax.swing.JPanel PasienPannel;
+    private javax.swing.JLabel PilihAkunText;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
