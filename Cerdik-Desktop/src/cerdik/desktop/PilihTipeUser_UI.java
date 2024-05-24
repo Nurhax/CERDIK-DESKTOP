@@ -7,6 +7,7 @@ package cerdik.desktop;
 
 import com.sun.prism.paint.Color;
 import static java.awt.Color.black;
+import javax.swing.JOptionPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.LineBorder;
 
@@ -38,7 +39,7 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         PasienPannel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        DokterPannel = new javax.swing.JPanel();
+        NakesPannel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         NextButton = new javax.swing.JButton();
         BackButton = new javax.swing.JButton();
@@ -104,36 +105,51 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        DokterPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        DokterPannel.addMouseListener(new java.awt.event.MouseAdapter() {
+        NakesPannel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        NakesPannel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                DokterPannelMouseClicked(evt);
+                NakesPannelMouseClicked(evt);
             }
         });
 
         jLabel4.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jLabel4.setText("Dokter");
+        jLabel4.setText("Nakes");
 
-        javax.swing.GroupLayout DokterPannelLayout = new javax.swing.GroupLayout(DokterPannel);
-        DokterPannel.setLayout(DokterPannelLayout);
-        DokterPannelLayout.setHorizontalGroup(
-            DokterPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DokterPannelLayout.createSequentialGroup()
+        javax.swing.GroupLayout NakesPannelLayout = new javax.swing.GroupLayout(NakesPannel);
+        NakesPannel.setLayout(NakesPannelLayout);
+        NakesPannelLayout.setHorizontalGroup(
+            NakesPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, NakesPannelLayout.createSequentialGroup()
                 .addContainerGap(184, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addGap(29, 29, 29))
         );
-        DokterPannelLayout.setVerticalGroup(
-            DokterPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(DokterPannelLayout.createSequentialGroup()
+        NakesPannelLayout.setVerticalGroup(
+            NakesPannelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(NakesPannelLayout.createSequentialGroup()
                 .addGap(92, 92, 92)
                 .addComponent(jLabel4)
                 .addContainerGap(146, Short.MAX_VALUE))
         );
 
         NextButton.setText("Next");
+        NextButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NextButtonActionPerformed(evt);
+            }
+        });
 
         BackButton.setText("Back");
+        BackButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BackButtonMouseClicked(evt);
+            }
+        });
+        BackButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -157,7 +173,7 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
                                 .addGap(26, 26, 26)
                                 .addComponent(PasienPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(DokterPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(NakesPannel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(24, 24, 24))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -167,7 +183,7 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
                 .addComponent(PilihAkunText)
                 .addGap(79, 79, 79)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(DokterPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(NakesPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(PasienPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ApotekerPannel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
@@ -196,6 +212,9 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     //Untuk set border seperti button radio
     public static int jumlahClicked = 1;
+    public static boolean isPasienClicked = false;
+    public static boolean isApotekerClicked = false;
+    public static boolean isNakesClicked = false;
 
 
     private void ApotekerPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ApotekerPannelMouseClicked
@@ -204,7 +223,8 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
         if(jumlahClicked % 2 == 0){
             ApotekerPannel.setBorder(new LineBorder(black));
             PasienPannel.setBorder(new BevelBorder(0));
-            DokterPannel.setBorder(new BevelBorder(0));
+            NakesPannel.setBorder(new BevelBorder(0));
+            isApotekerClicked = true;
         }else{
             ApotekerPannel.setBorder(new BevelBorder(0));
         }
@@ -217,25 +237,66 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
         if(jumlahClicked % 2 == 0){
             PasienPannel.setBorder(new LineBorder(black));
             ApotekerPannel.setBorder(new BevelBorder(0));
-            DokterPannel.setBorder(new BevelBorder(0));
+            NakesPannel.setBorder(new BevelBorder(0));
+            isPasienClicked = true;
         }else{
             PasienPannel.setBorder(new BevelBorder(0));
         }
         
     }//GEN-LAST:event_PasienPannelMouseClicked
 
-    private void DokterPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DokterPannelMouseClicked
+    private void NakesPannelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_NakesPannelMouseClicked
         // TODO add your handling code here:
         jumlahClicked++;
         if(jumlahClicked % 2 == 0){
-            DokterPannel.setBorder(new LineBorder(black));
+            NakesPannel.setBorder(new LineBorder(black));
             ApotekerPannel.setBorder(new BevelBorder(0));
             PasienPannel.setBorder(new BevelBorder(0));
+            isNakesClicked = true;
         }else{
-            DokterPannel.setBorder(new BevelBorder(0));
+            NakesPannel.setBorder(new BevelBorder(0));
         }
         
-    }//GEN-LAST:event_DokterPannelMouseClicked
+    }//GEN-LAST:event_NakesPannelMouseClicked
+
+    private void BackButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BackButtonMouseClicked
+//        // TODO add your handling code here:
+//        Login_UI backToLogin = new Login_UI();
+//        backToLogin.setVisible(true);
+//        dispose();
+    }//GEN-LAST:event_BackButtonMouseClicked
+
+    private void BackButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackButtonActionPerformed
+        // TODO add your handling code here:
+        Login_UI backToLogin = new Login_UI();
+        backToLogin.setVisible(true);
+        backToLogin.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_BackButtonActionPerformed
+
+    private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
+        // TODO add your handling code here:
+        if(isApotekerClicked){
+            SignUp_Apoteker_UI apotekerUI = new SignUp_Apoteker_UI();
+            apotekerUI.setVisible(true);
+            apotekerUI.setLocationRelativeTo(null);
+            dispose();
+        }else if(isNakesClicked){
+            SignUp_Nakes_UI nakesUI = new SignUp_Nakes_UI();
+            nakesUI.setVisible(true);
+            nakesUI.setLocationRelativeTo(null);
+            dispose();
+        }else if (isPasienClicked){
+            Menu_Pasien_UI pasienBio = new Menu_Pasien_UI();
+            pasienBio.setVisible(true);
+            pasienBio.setLocationRelativeTo(null);
+            dispose();
+        }
+        
+        if (!isApotekerClicked && !isNakesClicked && !isPasienClicked){
+            JOptionPane.showMessageDialog(this, "Tidak ada role yang di select!");
+        }
+    }//GEN-LAST:event_NextButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,7 +336,7 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ApotekerPannel;
     private javax.swing.JButton BackButton;
-    private javax.swing.JPanel DokterPannel;
+    private javax.swing.JPanel NakesPannel;
     private javax.swing.JButton NextButton;
     private javax.swing.JPanel PasienPannel;
     private javax.swing.JLabel PilihAkunText;

@@ -51,6 +51,11 @@ public class Login_UI extends javax.swing.JFrame {
         SignInMenuButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         SignUpMenuButton1.setText("Sign Up");
+        SignUpMenuButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SignUpMenuButton1ActionPerformed(evt);
+            }
+        });
 
         PasswordTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,6 +158,14 @@ public class Login_UI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_PasswordTextField1ActionPerformed
 
+    private void SignUpMenuButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignUpMenuButton1ActionPerformed
+        // TODO add your handling code here:
+        PilihTipeUser_UI uiBaru = new PilihTipeUser_UI();
+        uiBaru.setVisible(true);
+        uiBaru.setLocationRelativeTo(null);
+        dispose();
+    }//GEN-LAST:event_SignUpMenuButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -184,7 +197,9 @@ public class Login_UI extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Login_UI().setVisible(true);
+                Login_UI a = new Login_UI();
+                a.setVisible(true);
+                a.setLocationRelativeTo(null);
             }
         });
     }
