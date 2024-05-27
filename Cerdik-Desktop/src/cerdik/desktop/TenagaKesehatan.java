@@ -11,6 +11,14 @@ package cerdik.desktop;
  */
 public class TenagaKesehatan extends Account implements SignUp,Displays {
     private String Phone_Nakes;
+
+    public String getPhone_Nakes() {
+        return Phone_Nakes;
+    }
+
+    public void setPhone_Nakes(String Phone_Nakes) {
+        this.Phone_Nakes = Phone_Nakes;
+    }
     
     
     @Override

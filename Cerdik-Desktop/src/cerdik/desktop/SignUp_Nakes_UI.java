@@ -152,6 +152,11 @@ public class SignUp_Nakes_UI extends javax.swing.JFrame {
         });
 
         DaftarButton2.setText("Daftar");
+        DaftarButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DaftarButton2ActionPerformed(evt);
+            }
+        });
 
         UsernameLabel3.setText("Username");
 
@@ -287,6 +292,11 @@ public class SignUp_Nakes_UI extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_SignInMenuButton4ActionPerformed
 
+    private void DaftarButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DaftarButton2ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_DaftarButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -326,35 +336,25 @@ public class SignUp_Nakes_UI extends javax.swing.JFrame {
     private javax.swing.JButton DaftarButton2;
     private javax.swing.JTextField EmailTextField1;
     private javax.swing.JTextField PasswordTextField2;
-    private javax.swing.JTextField PasswordTextField3;
     private javax.swing.JTextField PasswordTextField4;
     private javax.swing.JButton SignInMenuButton2;
-    private javax.swing.JButton SignInMenuButton3;
     private javax.swing.JButton SignInMenuButton4;
     private javax.swing.JButton SignUpButton;
-    private javax.swing.JButton SignUpButton1;
     private javax.swing.JButton SignUpMenuButton2;
-    private javax.swing.JButton SignUpMenuButton3;
     private javax.swing.JButton SignUpMenuButton4;
     private javax.swing.JLabel UsernameLabel1;
-    private javax.swing.JLabel UsernameLabel2;
     private javax.swing.JLabel UsernameLabel3;
     private javax.swing.JTextField UsernameTextField2;
-    private javax.swing.JTextField UsernameTextField3;
     private javax.swing.JTextField UsernameTextField4;
     private javax.swing.JSpinner UsiaSpinner1;
-    private javax.swing.JSpinner UsiaSpinner2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     // End of variables declaration//GEN-END:variables
 }

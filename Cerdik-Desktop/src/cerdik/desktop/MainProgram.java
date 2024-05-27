@@ -5,6 +5,9 @@
  */
 package cerdik.desktop;
 
+import cerdik.desktop.JDBC.JDBC;
+import java.sql.SQLException;
+
 /**
  *
  * @author KnightlyTech
@@ -14,8 +17,11 @@ public class MainProgram {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         // TODO code application logic here
+        JDBC test = new JDBC();
+        test.TestConnection();
+        
     }
     
 }
