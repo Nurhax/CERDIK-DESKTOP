@@ -35,7 +35,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        IDPasienHolder = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         NamaLengkapTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -60,7 +60,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
 
         jLabel2.setText("Kode Unik Mu (Dicatat Ya)");
 
-        jLabel3.setText("IDPasienPlaceHolder");
+        IDPasienHolder.setText("IDPasienPlaceHolder");
 
         jLabel4.setText("Nama Lengkap");
 
@@ -92,7 +92,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jLabel3))
+                            .addComponent(IDPasienHolder))
                         .addComponent(jLabel4)
                         .addComponent(NamaLengkapTextField)))
                 .addContainerGap(68, Short.MAX_VALUE))
@@ -103,7 +103,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel3))
+                    .addComponent(IDPasienHolder))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -249,6 +249,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
     private javax.swing.JButton BackButton;
     private javax.swing.JRadioButton Gender1RadioButton;
     private javax.swing.JRadioButton Gender2RadioButton;
+    private javax.swing.JLabel IDPasienHolder;
     private javax.swing.JTextField NamaLengkapTextField;
     private javax.swing.JButton NextButton;
     private javax.swing.JLabel SignUpText1;
@@ -256,7 +257,6 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

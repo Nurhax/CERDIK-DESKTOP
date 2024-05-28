@@ -5,10 +5,12 @@
  */
 package cerdik.desktop;
 
+import java.sql.ResultSet;
+
 /**
  *
  * @author KnightlyTech
  */
 public interface Displays {
-    public void DisplayInfo();
+    public ResultSet DisplayInfo(String Username);
 }

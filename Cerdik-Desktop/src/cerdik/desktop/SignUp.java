@@ -10,5 +10,5 @@ package cerdik.desktop;
  * @author KnightlyTech
  */
 public interface SignUp {
-    public void signUp();
+    public void signUp(String Username, String Password, String Email);
 }

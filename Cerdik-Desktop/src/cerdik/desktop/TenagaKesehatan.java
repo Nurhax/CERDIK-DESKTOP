@@ -5,36 +5,78 @@
  */
 package cerdik.desktop;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author KnightlyTech
  */
 public class TenagaKesehatan extends Account implements SignUp,Displays {
-    private String Phone_Nakes;
 
-    public String getPhone_Nakes() {
-        return Phone_Nakes;
-    }
-
-    public void setPhone_Nakes(String Phone_Nakes) {
-        this.Phone_Nakes = Phone_Nakes;
-    }
-    
     
     @Override
-    public void Login() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String Login(String Username, String Password) {
+        try{
+            Connection cariUsername = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cariUsername.createStatement();
+            String getUsernameQuery = "SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'";
+            ResultSet result = statement.executeQuery(getUsernameQuery);
+            result.first();
+            
+            if(result.getString("Password").equals(Password) && result.getString("Role").equals("TENAGA KESEHATAN")){
+                return "TENAGA KESEHATAN";
+            }
+            
+            if(!result.getString("Password").equals(Password)){
+                return "PASSWORD SALAH!";
+            }
+            
+            cariUsername.close();
+            statement.close();
+            
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        
+        return "PASSWORD ATAU USERNAME SALAH!";
     }
 
     @Override
-    public void signUp() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void signUp(String Username, String Password, String Email) {
+        int hasilCreate = createID();
+        System.out.println(hasilCreate);
+        try{
+            Connection signUp = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = signUp.createStatement();
+            String DaftarQuery = "INSERT INTO AKUN(AccountID,Username,Password,Role,Email)  VALUES('"+hasilCreate+"','"+Username+"','"+Password+"','"+"TENAGA KESEHATAN"+"','"+Email+"')";
+            statement.executeUpdate(DaftarQuery);
+            statement.close();
+            signUp.close();
+            System.out.println("Nakes Berhasil Daftar!");
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
     }
 
     @Override
-    public void DisplayInfo() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ResultSet DisplayInfo(String Username) {
+        try{
+            Connection cariUsername = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cariUsername.createStatement();
+            String getUserInfo = "SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'";
+            ResultSet result = statement.executeQuery(getUserInfo);
+            result.first();
+            return result;
+        }catch(Exception e){
+            System.out.println("Error!" + e);
+        }
+        
+        return null;
     }
+
 
     
     

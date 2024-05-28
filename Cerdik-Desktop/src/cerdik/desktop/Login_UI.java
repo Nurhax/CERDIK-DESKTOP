@@ -28,7 +28,8 @@ public class Login_UI extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     public static ArrayList<TenagaKesehatan> DataNakes = new ArrayList<>();
-    
+    Pasien pasien1 = new Pasien();
+    TenagaKesehatan nakes1 = new TenagaKesehatan();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -179,29 +180,23 @@ public class Login_UI extends javax.swing.JFrame {
     private void LoginButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoginButton1ActionPerformed
         // TODO add your handling code here:
         try{
-            Connection cariUsername = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
-            Statement statement = cariUsername.createStatement();
-            String getUsernameQuery = "SELECT * FROM AKUN WHERE USERNAME = " + "'" + UsernameTextField1.getText().trim() + "'";
-            ResultSet result = statement.executeQuery(getUsernameQuery);
-            result.first();
-            
-            if(result.getString("Password").equals(PasswordTextField1.getText().trim()) && result.getString("Role").equals("NAKES")){
-                JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
-            }else if(result.getString("Password").equals(PasswordTextField1.getText().trim()) && result.getString("Role").equals("PASIEN")){
+            if(pasien1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("PASIEN")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Pasien!");
-            }else if(result.getString("Password").equals(PasswordTextField1.getText().trim()) && result.getString("Role").equals("APOTEKER")){
-                JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
+            }else if(nakes1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("TENAGA KESEHATAN")){
+                JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
+            }else{
+                JOptionPane.showMessageDialog(this, "Username Atau Password Salah!");
             }
             
-            if(!result.getString("Password").equals(PasswordTextField1.getText().trim())){
-                JOptionPane.showMessageDialog(this, "Password yang dimasukkan salah!");
-            }
             
-            cariUsername.close();
-            statement.close();
-            
+            //bagian gabrielle 
+//            }else if(result.getString("Password").equals(PasswordTextField1.getText().trim()) && result.getString("Role").equals("APOTEKER")){
+//                JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
+//            }
+        
+
+
         }catch(Exception e){
-            JOptionPane.showMessageDialog(this, "Username Tidak Ditemukan!");
             System.out.println("Error! " + e);
         }
     }//GEN-LAST:event_LoginButton1ActionPerformed

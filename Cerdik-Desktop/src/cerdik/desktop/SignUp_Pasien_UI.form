@@ -121,7 +121,7 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="EmailTextField1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="EmailTextField2" alignment="0" max="32767" attributes="0"/>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Component id="SignInMenuButton2" min="-2" pref="104" max="-2" attributes="0"/>
                                       <EmptySpace pref="72" max="32767" attributes="0"/>
@@ -162,7 +162,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="EmailTextField1" min="-2" pref="49" max="-2" attributes="0"/>
+                      <Component id="EmailTextField2" min="-2" pref="49" max="-2" attributes="0"/>
                       <EmptySpace pref="36" max="32767" attributes="0"/>
                       <Component id="DaftarButton" min="-2" pref="47" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
@@ -197,6 +197,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Daftar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DaftarButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="UsernameLabel1">
               <Properties>
@@ -213,7 +216,7 @@
                 <Property name="text" type="java.lang.String" value="Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="EmailTextField1">
+            <Component class="javax.swing.JTextField" name="EmailTextField2">
             </Component>
           </SubComponents>
         </Container>

@@ -5,6 +5,8 @@
  */
 package cerdik.desktop;
 
+
+
 /**
  *
  * @author KnightlyTech
@@ -13,10 +15,11 @@ package cerdik.desktop;
 public abstract class Account {
     private String Username;
     private String Password;
+    private String Email;
     private String ID;
     private String Role;
     
-    public abstract void Login();
+    public abstract String Login(String Username, String Password);
     //abstract method karena implementasi semua jenis role akan sama
 
     public String getUsername() {
@@ -49,6 +52,12 @@ public abstract class Account {
 
     public void setRole(String Role) {
         this.Role = Role;
+    }
+    
+    //ID 5 Digit Random
+    public static int createID(){
+        int min = 10000, max = 99999;
+        return (min + (int)(Math.random() * ((max-min)+1)));
     }
     
     
