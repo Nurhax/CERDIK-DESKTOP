@@ -225,6 +225,8 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
             PasienPannel.setBorder(new BevelBorder(0));
             NakesPannel.setBorder(new BevelBorder(0));
             isApotekerClicked = true;
+            isPasienClicked = false;
+            isNakesClicked = false;
         }else{
             ApotekerPannel.setBorder(new BevelBorder(0));
         }
@@ -239,6 +241,8 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
             ApotekerPannel.setBorder(new BevelBorder(0));
             NakesPannel.setBorder(new BevelBorder(0));
             isPasienClicked = true;
+            isApotekerClicked = false;
+            isNakesClicked = false;
         }else{
             PasienPannel.setBorder(new BevelBorder(0));
         }
@@ -253,6 +257,8 @@ public class PilihTipeUser_UI extends javax.swing.JFrame {
             ApotekerPannel.setBorder(new BevelBorder(0));
             PasienPannel.setBorder(new BevelBorder(0));
             isNakesClicked = true;
+            isPasienClicked = false;
+            isApotekerClicked = false;
         }else{
             NakesPannel.setBorder(new BevelBorder(0));
         }

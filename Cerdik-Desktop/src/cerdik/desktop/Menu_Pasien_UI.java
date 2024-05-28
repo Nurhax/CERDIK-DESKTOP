@@ -198,7 +198,7 @@ public class Menu_Pasien_UI extends javax.swing.JFrame {
 
     private void NextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NextButtonActionPerformed
         // TODO add your handling code here:
-        if(NamaLengkapTextField.getText().isEmpty() || (int)UmurSpinner.getValue() == 0 || (Gender1RadioButton.isSelected() ^ Gender2RadioButton.isSelected())){
+        if(NamaLengkapTextField.getText().isEmpty() && (int)UmurSpinner.getValue() == 0 && (Gender1RadioButton.isSelected() ^ Gender2RadioButton.isSelected())){
             JOptionPane.showMessageDialog(this, "Lengkapi seluruh biodatamu terlebih dahulu!");
         }else{
             SignUp_Pasien_UI pasienUI = new SignUp_Pasien_UI();

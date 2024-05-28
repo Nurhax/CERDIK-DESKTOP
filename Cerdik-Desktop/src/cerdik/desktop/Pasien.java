@@ -11,6 +11,33 @@ package cerdik.desktop;
  */
 public class Pasien extends Account implements SignUp,Displays{
     private int Usia;
+    private String Nama;    
+    private String Gender;
+
+    public String getNama() {
+        return Nama;
+    }
+
+    public void setNama(String Nama) {
+        this.Nama = Nama;
+    }
+
+    public int getUsia() {
+        return Usia;
+    }
+
+    public void setUsia(int Usia) {
+        this.Usia = Usia;
+    }
+
+    public String getGender() {
+        return Gender;
+    }
+
+    public void setGender(String Gender) {
+        this.Gender = Gender;
+    }
+    
     
     
     @Override
