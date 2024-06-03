@@ -8,6 +8,9 @@ package cerdik.desktop;
 import java.util.ArrayList;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import dashboardpasien.*;
+import uinakes.*;
+import guiApoteker.*;
 /**
  *
  * @author KnightlyTech
@@ -30,6 +33,7 @@ public class Login_UI extends javax.swing.JFrame {
     public static ArrayList<TenagaKesehatan> DataNakes = new ArrayList<>();
     Pasien pasien1 = new Pasien();
     TenagaKesehatan nakes1 = new TenagaKesehatan();
+    Apoteker apoteker1 = new Apoteker();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -182,20 +186,25 @@ public class Login_UI extends javax.swing.JFrame {
         try{
             if(pasien1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("PASIEN")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Pasien!");
+                HomePasien pasien = new HomePasien();
+                pasien.setLocationRelativeTo(null);
+                pasien.setVisible(true);
+                this.dispose();
             }else if(nakes1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("TENAGA KESEHATAN")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
+                jadwalPasien nakes = new jadwalPasien();
+                nakes.setLocationRelativeTo(null);
+                nakes.setVisible(true);
+                this.dispose();
+            }else if(apoteker1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("APOTEKER")){
+                JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
+                Persetujuan apoteker = new Persetujuan();
+                apoteker.setLocationRelativeTo(null);
+                apoteker.setVisible(true);
+                this.dispose();
             }else{
                 JOptionPane.showMessageDialog(this, "Username Atau Password Salah!");
             }
-            
-            
-            //bagian gabrielle 
-//            }else if(result.getString("Password").equals(PasswordTextField1.getText().trim()) && result.getString("Role").equals("APOTEKER")){
-//                JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
-//            }
-        
-
-
         }catch(Exception e){
             System.out.println("Error! " + e);
         }
