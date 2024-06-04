@@ -29,6 +29,32 @@ public class JDBC {
         }
     }
      
+    public int getIDFromDB(String Username) throws SQLException{
+        try{
+            Connection cariAccountID = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cariAccountID.createStatement();
+            String getIDQuery = "SELECT AccountID FROM AKUN WHERE USERNAME = " + "'" + Username + "'";
+            ResultSet result = statement.executeQuery(getIDQuery);
+            result.first();
+            int hasilGetID = result.getInt("AccountID");
+            
+            
+            if(hasilGetID == 0){
+                cariAccountID.close();
+                statement.close();
+                return -1;
+            }else{
+                cariAccountID.close();
+                statement.close();
+                return hasilGetID;
+            }
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        return 0;
+    }
+    
+    
      
     
 }

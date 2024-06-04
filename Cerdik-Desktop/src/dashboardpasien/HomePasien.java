@@ -5,8 +5,17 @@
  */
 package dashboardpasien;
 
+import cerdik.desktop.JDBC.JDBC;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -23,7 +32,14 @@ public class HomePasien extends javax.swing.JFrame {
         initComponents();
     }
     
-     DefaultListModel mod = new DefaultListModel();
+    JDBC JDBCManager = new JDBC();
+    
+
+    
+     DefaultListModel modelDetail = new DefaultListModel();
+     DefaultListModel modelInfoObat = new DefaultListModel();
+     DefaultListModel modelGejala = new DefaultListModel();
+     DefaultListModel modelNull = new DefaultListModel();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,13 +56,13 @@ public class HomePasien extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        ListGejala = new javax.swing.JList<>();
         jButton3 = new javax.swing.JButton();
         TextNamaPasien = new javax.swing.JLabel();
         TextHalo = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        ListInfoObat = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         SaranPenyajian = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -54,9 +70,9 @@ public class HomePasien extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
+        ListDetail = new javax.swing.JList<>();
         jButton5 = new javax.swing.JButton();
-        jCalendar2 = new com.toedter.calendar.JCalendar();
+        jCalendar2Jadwal = new com.toedter.calendar.JCalendar();
         jPanel4 = new javax.swing.JPanel();
         LogOut = new javax.swing.JButton();
         Home = new javax.swing.JButton();
@@ -84,12 +100,7 @@ public class HomePasien extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(ListGejala);
 
         jButton3.setBackground(new java.awt.Color(166, 193, 217));
         jButton3.setText("Delete");
@@ -116,12 +127,12 @@ public class HomePasien extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(TextHalo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextNamaPasien))
+                        .addComponent(TextNamaPasien)
+                        .addContainerGap())
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,12 +150,7 @@ public class HomePasien extends javax.swing.JFrame {
 
         jPanel5.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(ListInfoObat);
 
         jLabel2.setText("Saran Penyajian");
 
@@ -178,7 +184,7 @@ public class HomePasien extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(SaranPenyajian)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
@@ -193,12 +199,7 @@ public class HomePasien extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(ListDetail);
 
         jButton5.setBackground(new java.awt.Color(166, 193, 217));
         jButton5.setText("Delete");
@@ -206,6 +207,17 @@ public class HomePasien extends javax.swing.JFrame {
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+
+        jCalendar2Jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCalendar2JadwalMouseClicked(evt);
+            }
+        });
+        jCalendar2Jadwal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar2JadwalPropertyChange(evt);
             }
         });
 
@@ -220,14 +232,14 @@ public class HomePasien extends javax.swing.JFrame {
                         .addComponent(jScrollPane4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCalendar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jCalendar2Jadwal, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCalendar2Jadwal, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane4)
@@ -341,7 +353,7 @@ public class HomePasien extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        if (jList3.getSelectedIndex() == -1) {
+        if (ListDetail.getSelectedIndex() == -1) {
          JOptionPane.showMessageDialog(this, "Pilih jadwal yang ingin anda hapus dahulu !");
         } else {
              int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus jadwal ?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
@@ -357,7 +369,7 @@ public class HomePasien extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        if (jList1.getSelectedIndex() == -1) {
+        if (ListGejala.getSelectedIndex() == -1) {
              JOptionPane.showMessageDialog(this, "Pilih gejala yang ingin anda hapus dahulu !");
         } else {
              int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus gejala ?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
@@ -391,6 +403,15 @@ public class HomePasien extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_LogOutActionPerformed
 
+    private void jCalendar2JadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar2JadwalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCalendar2JadwalMouseClicked
+
+    private void jCalendar2JadwalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2JadwalPropertyChange
+        // TODO add your handling code here:
+        getGejala();
+    }//GEN-LAST:event_jCalendar2JadwalPropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -422,26 +443,50 @@ public class HomePasien extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HomePasien().setVisible(true);
+                
+                
             }
         });
+    }
+    
+    public void getGejala(){
+        modelGejala.removeAllElements();
+        ListGejala.setModel(modelGejala);
+        try{
+            int IDUser = JDBCManager.getIDFromDB(TextNamaPasien.getText());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(jCalendar2Jadwal.getDate());
+            Connection cekGejala = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cekGejala.createStatement();
+            String queryGejala = "SELECT GEJALA FROM JADWAL WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'";
+            ResultSet result = statement.executeQuery(queryGejala);
+            while(result.next()){
+                modelGejala.addElement(result.getString("GEJALA"));
+            }
+            ListGejala.setModel(modelGejala);
+            cekGejala.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Help;
     private javax.swing.JButton Home;
+    private javax.swing.JList<String> ListDetail;
+    private javax.swing.JList<String> ListGejala;
+    private javax.swing.JList<String> ListInfoObat;
     private javax.swing.JButton LogOut;
     private javax.swing.JLabel SaranPenyajian;
     private javax.swing.JLabel TextHalo;
-    private javax.swing.JLabel TextNamaPasien;
+    public javax.swing.JLabel TextNamaPasien;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
-    private com.toedter.calendar.JCalendar jCalendar2;
+    private com.toedter.calendar.JCalendar jCalendar2Jadwal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

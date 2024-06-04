@@ -189,6 +189,7 @@ public class Login_UI extends javax.swing.JFrame {
                 HomePasien pasien = new HomePasien();
                 pasien.setLocationRelativeTo(null);
                 pasien.setVisible(true);
+                pasien.TextNamaPasien.setText(UsernameTextField1.getText().trim());
                 this.dispose();
             }else if(nakes1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("TENAGA KESEHATAN")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
