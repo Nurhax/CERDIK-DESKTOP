@@ -26,7 +26,7 @@ public class Apoteker extends Account implements SignUp,Displays{
             result.first();
             
             if(result.getString("Password").equals(Password) && result.getString("Role").equals("APOTEKER")){
-                return "PASIEN";
+                return "APOTEKER";
             }
             
             if(!result.getString("Password").equals(Password)){
