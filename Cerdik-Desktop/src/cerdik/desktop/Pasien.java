@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -20,6 +21,16 @@ public class Pasien extends Account implements SignUp,Displays{
     private String Nama;    
     private String Gender;
 
+    public static ArrayList<Pasien> listPasien = new ArrayList<>();
+    
+    public Pasien(){}
+    
+    public Pasien(String Fullname, String Gender, int Usia){
+        this.Usia = Usia;
+        this.Nama = Fullname;
+        this.Gender = Gender;
+    }
+    
     public String getNama() {
         return Nama;
     }

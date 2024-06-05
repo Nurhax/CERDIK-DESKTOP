@@ -298,6 +298,7 @@ public class HomePasien extends javax.swing.JFrame {
 
         Home.setBackground(new java.awt.Color(224, 229, 236));
         Home.setText("Home");
+        Home.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HomeActionPerformed(evt);
