@@ -29,6 +29,25 @@ public class JDBC {
         }
     }
      
+    public String getUsernameFromDB(int IDAkunPasien) throws SQLException{
+        try{
+            Connection cariAccountID = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cariAccountID.createStatement();
+            String getUsernameQuery = "SELECT Username FROM AKUN WHERE AccountID = " + "'" + IDAkunPasien + "'";
+            ResultSet result = statement.executeQuery(getUsernameQuery);
+            result.first();
+            String hasil = result.getString("Username");
+            
+            if(!hasil.isEmpty()){
+                return hasil;
+            }
+            
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        return "Tidak ada";
+    } 
+    
     public int getIDFromDB(String Username) throws SQLException{
         try{
             Connection cariAccountID = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
@@ -37,6 +56,32 @@ public class JDBC {
             ResultSet result = statement.executeQuery(getIDQuery);
             result.first();
             int hasilGetID = result.getInt("AccountID");
+            
+            
+            if(hasilGetID == 0){
+                cariAccountID.close();
+                statement.close();
+                return -1;
+            }else{
+                cariAccountID.close();
+                statement.close();
+                return hasilGetID;
+            }
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        return 0;
+    }
+    
+    
+    public int getObatIDFromDB(int IDPasien){
+        try{
+            Connection cariAccountID = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cariAccountID.createStatement();
+            String getIDQuery = "SELECT IDObat FROM JADWAL WHERE IDPasien = " + "'" + IDPasien + "'";
+            ResultSet result = statement.executeQuery(getIDQuery);
+            result.first();
+            int hasilGetID = result.getInt("IDObat");
             
             
             if(hasilGetID == 0){
