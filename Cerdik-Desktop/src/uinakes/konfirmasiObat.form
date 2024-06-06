@@ -212,12 +212,7 @@
         <Component class="javax.swing.JList" name="jList1">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Nama User Pertama"/>
-                <StringItem index="1" value="Nama User Kedua"/>
-                <StringItem index="2" value="Nama User ketiga"/>
-                <StringItem index="3" value="Nama User Keempat"/>
-              </StringArray>
+              <StringArray count="0"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -236,7 +231,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="tidakSetujuButton">
       <Properties>
-        <Property name="text" type="java.lang.String" value="TIdak Setuju"/>
+        <Property name="text" type="java.lang.String" value="Tidak Setuju"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="tidakSetujuButtonActionPerformed"/>
@@ -260,17 +255,17 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="outputId2" max="32767" attributes="0"/>
+                              <Component id="outputId2Konfirmasi" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="outputStatus" max="32767" attributes="0"/>
+                              <Component id="outputStatusKonfirmasi" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="outputNama" max="32767" attributes="0"/>
+                              <Component id="outputNamaKonfirmasi" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -286,17 +281,17 @@
                       <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="outputNama" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="outputNamaKonfirmasi" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="outputId2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="outputId2Konfirmasi" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="outputStatus" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="outputStatusKonfirmasi" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="37" max="32767" attributes="0"/>
                   </Group>
@@ -310,9 +305,9 @@
             <Property name="text" type="java.lang.String" value="Nama Pasien :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="outputNama">
+        <Component class="javax.swing.JLabel" name="outputNamaKonfirmasi">
           <Properties>
-            <Property name="text" type="java.lang.String" value="output nama"/>
+            <Property name="text" type="java.lang.String" value="&quot; &quot;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
@@ -320,9 +315,9 @@
             <Property name="text" type="java.lang.String" value="Id Pasien      :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="outputId2">
+        <Component class="javax.swing.JLabel" name="outputId2Konfirmasi">
           <Properties>
-            <Property name="text" type="java.lang.String" value="output id"/>
+            <Property name="text" type="java.lang.String" value="&quot; &quot;"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
@@ -330,7 +325,7 @@
             <Property name="text" type="java.lang.String" value="Status          :"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="outputStatus">
+        <Component class="javax.swing.JLabel" name="outputStatusKonfirmasi">
           <Properties>
             <Property name="text" type="java.lang.String" value="tidak Setuju/Setuju"/>
           </Properties>
