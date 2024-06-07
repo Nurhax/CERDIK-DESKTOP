@@ -5,6 +5,12 @@
  */
 package uinakes;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import static uinakes.jadwalPasien.listPasienModel;
+
 /**
  *
  * @author LENOVO
@@ -33,25 +39,24 @@ public class melihatJadwal extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         inputNama = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        nama = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        idPasien = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jCalendar2 = new com.toedter.calendar.JCalendar();
         jLabel4 = new javax.swing.JLabel();
-        namaPenyakit = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        deskripsiText = new javax.swing.JTextArea();
         jLabel11 = new javax.swing.JLabel();
-        namaObat = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
-        dosisObat = new javax.swing.JTextField();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        listObat = new javax.swing.JList<>();
         backButton = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        JadwalMulaiPlaceholder = new javax.swing.JLabel();
+        JadwalBerakhirPlaceHolder = new javax.swing.JLabel();
+        GejalaPlaceHolder = new javax.swing.JLabel();
+        NamaObatPlaceholder = new javax.swing.JLabel();
+        DosisObatPlaceholder = new javax.swing.JLabel();
+        NamaPasienPlaceHolder = new javax.swing.JLabel();
+        IDPasienPlaceHolder = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1002, 1250));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -74,11 +79,11 @@ public class melihatJadwal extends javax.swing.JFrame {
         jPanel21Layout.setHorizontalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel21Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel25, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(inputNama, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(inputNama, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(130, 130, 130))
         );
         jPanel21Layout.setVerticalGroup(
             jPanel21Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -93,12 +98,6 @@ public class melihatJadwal extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel2.setText("Nama ");
 
-        nama.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                namaActionPerformed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("ID Pasien");
 
@@ -106,23 +105,11 @@ public class melihatJadwal extends javax.swing.JFrame {
         jLabel3.setText("Jadwal Pasien");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel4.setText("Nama Penyakit");
-
-        deskripsiText.setColumns(20);
-        deskripsiText.setRows(5);
-        deskripsiText.setText("Deskripsi Penyakit");
-        jScrollPane2.setViewportView(deskripsiText);
+        jLabel4.setText("Gejala");
 
         jLabel11.setText("Nama Obat");
 
         jLabel26.setText("Dosis Obat");
-
-        listObat.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "obat 1", "obat 2", "obat 3", "obat 4", "obat 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane3.setViewportView(listObat);
 
         backButton.setText("Back");
         backButton.addActionListener(new java.awt.event.ActionListener() {
@@ -131,56 +118,71 @@ public class melihatJadwal extends javax.swing.JFrame {
             }
         });
 
+        jLabel5.setText("Jadwal Mulai");
+
+        jLabel6.setText("Jadwal Berakhir");
+
+        JadwalMulaiPlaceholder.setText("JadwalMulaiPlaceholder");
+
+        JadwalBerakhirPlaceHolder.setText("JadwalBerakhirPlaceHolder");
+
+        GejalaPlaceHolder.setText("GejalaPlaceHolder");
+
+        NamaObatPlaceholder.setText("NamaObatPlaceholder");
+
+        DosisObatPlaceholder.setText("DosisObatPlaceholder");
+
+        NamaPasienPlaceHolder.setText("NamaPasienPlaceHolder");
+
+        IDPasienPlaceHolder.setText("IDPasienPlaceHolder");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(94, 94, 94)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 565, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(18, 18, 18)
-                                .addComponent(namaPenyakit))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 443, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(1, 1, 1)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel11)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(namaObat, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel26)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(dosisObat))
-                                    .addComponent(jScrollPane3))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel4)
+                        .addContainerGap(901, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCalendar2, javax.swing.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel1))
-                                .addGap(23, 23, 23)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(idPasien)
-                                    .addComponent(nama)))
+                            .addComponent(jPanel21, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addGap(171, 171, 171)
                                         .addComponent(jLabel3))
-                                    .addComponent(jPanel21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel2)
+                                            .addComponent(jLabel1))
+                                        .addGap(56, 56, 56)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(IDPasienPlaceHolder)
+                                            .addComponent(NamaPasienPlaceHolder))))
                                 .addGap(0, 0, Short.MAX_VALUE)))
-                        .addGap(472, 472, 472))))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 376, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(472, 472, 472))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel26))
+                        .addGap(39, 39, 39)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(DosisObatPlaceholder)
+                            .addComponent(NamaObatPlaceholder)
+                            .addComponent(JadwalBerakhirPlaceHolder)
+                            .addComponent(JadwalMulaiPlaceholder)
+                            .addComponent(GejalaPlaceHolder))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -190,34 +192,38 @@ public class melihatJadwal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(nama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                    .addComponent(NamaPasienPlaceHolder))
+                .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(idPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(IDPasienPlaceHolder))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 382, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(36, 36, 36)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(JadwalMulaiPlaceholder))
+                .addGap(28, 28, 28)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(JadwalBerakhirPlaceHolder))
+                .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(namaPenyakit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                    .addComponent(GejalaPlaceHolder))
+                .addGap(38, 38, 38)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(namaObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(NamaObatPlaceholder))
+                .addGap(50, 50, 50)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel26)
-                    .addComponent(dosisObat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                    .addComponent(DosisObatPlaceholder))
+                .addGap(215, 215, 215)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(145, Short.MAX_VALUE))
         );
 
         jScrollPane1.setViewportView(jPanel1);
@@ -226,7 +232,7 @@ public class melihatJadwal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,30 +242,33 @@ public class melihatJadwal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void namaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_namaActionPerformed
-
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
-        // TODO add your handling code here:
-        nama.setText("Nama User Pertama");
-        idPasien.setText("152251");
-        namaPenyakit.setText("demam");
-        deskripsiText.setText("demam adalah penyakit yang menyerang imun ditubuh manusia, yang membuat daya tahan tubuh nantinya melemah");
-        
-        
-        nama.setEditable(false);
-        idPasien.setEditable(false);
-        namaPenyakit.setEditable(false);
-        deskripsiText.setEditable(false);
+
     }//GEN-LAST:event_formComponentShown
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
         konfirmasiObat gantiFrame = new konfirmasiObat();
-        gantiFrame.setLocationRelativeTo(null);
-        gantiFrame.setVisible(true);
-        this.dispose();
+        try{
+            listPasienModel.clear();
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            Connection getDataJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getDataJadwal.createStatement();
+            String getDataKonfirm = "SELECT OBAT.NAMA, AKUN.USERNAME, START_DATE FROM JADWAL NATURAL JOIN AKUN NATURAL JOIN OBAT WHERE ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 0 AND AKUN.ROLE = 'PASIEN'";
+            ResultSet result = statement.executeQuery(getDataKonfirm);
+            while(result.next()){
+                listPasienModel.addElement(result.getString("OBAT.NAMA") + " - " + result.getString("AKUN.USERNAME") + " - " + result.getString("START_DATE"));
+            }
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            getDataJadwal.close();
+            statement.close();
+
+            gantiFrame.setLocationRelativeTo(null);
+            gantiFrame.setVisible(true);
+            this.dispose();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
     }//GEN-LAST:event_backButtonActionPerformed
     
     
@@ -299,53 +308,27 @@ public class melihatJadwal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JLabel DosisObatPlaceholder;
+    public javax.swing.JLabel GejalaPlaceHolder;
+    public javax.swing.JLabel IDPasienPlaceHolder;
+    public javax.swing.JLabel JadwalBerakhirPlaceHolder;
+    public javax.swing.JLabel JadwalMulaiPlaceholder;
+    public javax.swing.JLabel NamaObatPlaceholder;
+    public javax.swing.JLabel NamaPasienPlaceHolder;
     private javax.swing.JButton backButton;
-    private javax.swing.JTextArea deskripsiText;
-    private javax.swing.JTextField dosisObat;
-    private javax.swing.JTextField idPasien;
-    private javax.swing.JLabel inputNama;
+    public javax.swing.JLabel inputNama;
     private com.toedter.calendar.JCalendar jCalendar2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel12;
-    private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
-    private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel18;
-    private javax.swing.JPanel jPanel19;
-    private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JList<String> listObat;
-    private javax.swing.JTextField nama;
-    private javax.swing.JTextField namaObat;
-    private javax.swing.JTextField namaPenyakit;
     // End of variables declaration//GEN-END:variables
 }

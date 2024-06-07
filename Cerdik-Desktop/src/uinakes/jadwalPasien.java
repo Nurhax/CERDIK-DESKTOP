@@ -6,6 +6,7 @@
 package uinakes;
 
 import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
 import cerdik.desktop.Pasien;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -277,9 +278,27 @@ public class jadwalPasien extends javax.swing.JFrame {
         // TODO add your handling code here:
         konfirmasiObat gantiFrame = new konfirmasiObat();
         konfirmasiObat.simpanIDNakes = saveIDNakes;
-        gantiFrame.setLocationRelativeTo(null);
-        gantiFrame.setVisible(true);
-        this.dispose();
+        try{
+            listPasienModel.clear();
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            Connection getDataJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getDataJadwal.createStatement();
+            String getDataKonfirm = "SELECT OBAT.NAMA, AKUN.USERNAME, START_DATE FROM JADWAL NATURAL JOIN AKUN NATURAL JOIN OBAT WHERE ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 0 AND AKUN.ROLE = 'PASIEN'";
+            ResultSet result = statement.executeQuery(getDataKonfirm);
+            while(result.next()){
+                listPasienModel.addElement(result.getString("OBAT.NAMA") + " - " + result.getString("AKUN.USERNAME") + " - " + result.getString("START_DATE"));
+            }
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            getDataJadwal.close();
+            statement.close();
+
+            gantiFrame.setLocationRelativeTo(null);
+            gantiFrame.setVisible(true);
+            this.dispose();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        
     }//GEN-LAST:event_konfirmasiObatButtonActionPerformed
 
     private void inputJadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJadwalActionPerformed
@@ -355,7 +374,10 @@ public class jadwalPasien extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
         }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 
@@ -409,6 +431,7 @@ public class jadwalPasien extends javax.swing.JFrame {
                 //auto fill jadwal pasien yang udah pernah diinput
                 listPasienModel.clear();
                 listPasien.setModel(listPasienModel);
+                Pasien.listPasien.clear();
                 try{
                     Connection getPasienForNakes = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
                     Statement statement = getPasienForNakes.createStatement();

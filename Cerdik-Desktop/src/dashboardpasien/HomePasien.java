@@ -6,6 +6,7 @@
 package dashboardpasien;
 
 import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -407,9 +408,12 @@ public class HomePasien extends javax.swing.JFrame {
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         // TODO add your handling code here:
-        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin logout?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_LogOutActionPerformed
 

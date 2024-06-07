@@ -6,6 +6,7 @@
 package dashboardpasien;
 
 import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
 import javax.swing.JOptionPane;
 
 /**
@@ -378,7 +379,10 @@ public class HelpCenter extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
         }
     }//GEN-LAST:event_LogOutActionPerformed
 

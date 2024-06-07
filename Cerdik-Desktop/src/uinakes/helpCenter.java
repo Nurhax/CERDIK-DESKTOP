@@ -5,7 +5,13 @@
  */
 package uinakes;
 
+import cerdik.desktop.Login_UI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
+import static uinakes.jadwalPasien.listPasienModel;
 
 /**
  *
@@ -358,9 +364,26 @@ public class helpCenter extends javax.swing.JFrame {
         // TODO add your handling code here:
         konfirmasiObat gantiFrame = new konfirmasiObat();
         konfirmasiObat.simpanIDNakes = simpanIDNakesCenter;
-        gantiFrame.setLocationRelativeTo(null);
-        gantiFrame.setVisible(true);
-        this.dispose();
+        try{
+            listPasienModel.clear();
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            Connection getDataJadwal2 = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getDataJadwal2.createStatement();
+            String getDataKonfirm2 = "SELECT OBAT.NAMA, AKUN.USERNAME, START_DATE FROM JADWAL NATURAL JOIN AKUN NATURAL JOIN OBAT WHERE ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 0 AND AKUN.ROLE = 'PASIEN'";
+            ResultSet result = statement.executeQuery(getDataKonfirm2);
+            while(result.next()){
+                listPasienModel.addElement(result.getString("OBAT.NAMA") + " - " + result.getString("AKUN.USERNAME") + " - " + result.getString("START_DATE"));
+            }
+            gantiFrame.konfirmasiObatList2.setModel(listPasienModel);
+            getDataJadwal2.close();
+            statement.close();
+            
+            gantiFrame.setLocationRelativeTo(null);
+            gantiFrame.setVisible(true);
+            this.dispose();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
     }//GEN-LAST:event_konfirmasiObat3ActionPerformed
 
     private void pertanyaan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pertanyaan1MouseClicked
@@ -392,7 +415,10 @@ public class helpCenter extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 

@@ -5,6 +5,13 @@
  */
 package uinakes;
 
+import cerdik.desktop.Login_UI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -22,7 +29,18 @@ public class konfirmasiObat extends javax.swing.JFrame {
     }
     
     public static int simpanIDNakes;
+    public DefaultListModel konfirmasiModel = new DefaultListModel();
+    public static String namaPasienSimpan;
+    public static int idPasienSimpan;
+    public static String obatSaatIni;
+    public static int simpanIDObat;
+    public static String simpanJadwalMulai;
+    public static String simpanJadwalAkhir;
+    public static String simpanGejala;
+    public static String simpanDosisObat;
 
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,7 +58,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        konfirmasiObatList2 = new javax.swing.JList<>();
         setujuButton = new javax.swing.JButton();
         tidakSetujuButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -48,8 +66,6 @@ public class konfirmasiObat extends javax.swing.JFrame {
         outputNamaKonfirmasi = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         outputId2Konfirmasi = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        outputStatusKonfirmasi = new javax.swing.JLabel();
         viewJadwal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,7 +153,12 @@ public class konfirmasiObat extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jScrollPane1.setViewportView(jList1);
+        konfirmasiObatList2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                konfirmasiObatList2MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(konfirmasiObatList2);
 
         setujuButton.setText("Setuju");
         setujuButton.addActionListener(new java.awt.event.ActionListener() {
@@ -163,10 +184,6 @@ public class konfirmasiObat extends javax.swing.JFrame {
 
         outputId2Konfirmasi.setText("\" \"");
 
-        jLabel4.setText("Status          :");
-
-        outputStatusKonfirmasi.setText("tidak Setuju/Setuju");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -180,10 +197,6 @@ public class konfirmasiObat extends javax.swing.JFrame {
                             .addComponent(jLabel3)
                             .addGap(18, 18, 18)
                             .addComponent(outputId2Konfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addGap(18, 18, 18)
-                            .addComponent(outputStatusKonfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(18, 18, 18)
@@ -203,11 +216,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(outputId2Konfirmasi))
-                    .addGap(39, 39, 39)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel4)
-                        .addComponent(outputStatusKonfirmasi))
-                    .addContainerGap(37, Short.MAX_VALUE)))
+                    .addContainerGap(108, Short.MAX_VALUE)))
         );
 
         viewJadwal.setText("View");
@@ -290,22 +299,52 @@ public class konfirmasiObat extends javax.swing.JFrame {
 
     private void setujuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setujuButtonActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "Jadwal telah anda setujui!");
-        outputStatusKonfirmasi.setText("Setuju");
+        getIDObatForEdit();
+        try{
+            Connection setujuJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = setujuJadwal.createStatement();
+            String setujuQuery = "UPDATE JADWAL SET ISCONFIRMEDNAKES = 1 WHERE IDOBAT = " + simpanIDObat + " AND IDPASIEN = " + idPasienSimpan + " AND IDJADWAL = (SELECT IDJADWAL FROM JADWAL WHERE IDPASIEN = " + idPasienSimpan + " AND IDNAKES = " + jadwalPasien.saveIDNakes + " AND IDOBAT = " + simpanIDObat + ")";
+            statement.executeUpdate(setujuQuery);
+            setujuJadwal.close();
+            statement.close();
+            JOptionPane.showMessageDialog(this, "Jadwal telah anda setujui!");
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+        
     }//GEN-LAST:event_setujuButtonActionPerformed
 
     private void tidakSetujuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tidakSetujuButtonActionPerformed
         // TODO add your handling code here:
-        JFrame popUp = new JFrame();
-        popUpTidakSetuju gantiFrame = new popUpTidakSetuju(popUp,true);
-        gantiFrame.setLocationRelativeTo(null);
-        gantiFrame.setVisible(true);
-        outputStatusKonfirmasi.setText("Tidak Setuju");
+        getIDObatForEdit();
+        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin tidak setuju dengan jadwal ini?", "Select", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            try{
+                Connection tidakSetujuJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+                Statement statement = tidakSetujuJadwal.createStatement();
+                String tidakSetujuQuery = "UPDATE JADWAL SET ISCONFIRMEDNAKES = 1, ISCONFIRMEDAPOTEKER = 0 WHERE IDOBAT = " + simpanIDObat + " AND IDPASIEN = " + idPasienSimpan + " AND IDJADWAL = (SELECT IDJADWAL FROM JADWAL WHERE IDPASIEN = " + idPasienSimpan + " AND IDNAKES = " + jadwalPasien.saveIDNakes + " AND IDOBAT = " + simpanIDObat + ")";
+                tidakSetujuJadwal.close();
+                statement.close();
+                JOptionPane.showMessageDialog(this, "Jadwal tidak disetujui dan akan dilihat kembali oleh apoteker!");
+            }catch (Exception e){
+                System.out.println("Error! " + e);
+            }
+        }
     }//GEN-LAST:event_tidakSetujuButtonActionPerformed
 
     private void viewJadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewJadwalActionPerformed
         // TODO add your handling code here:
+        getIDObatForEdit();
+        getJadwalDetailsForView();
         melihatJadwal gantiFrame = new melihatJadwal();
+        gantiFrame.inputNama.setText(namaPasienSimpan);
+        gantiFrame.NamaPasienPlaceHolder.setText(namaPasienSimpan);
+        gantiFrame.IDPasienPlaceHolder.setText(Integer.toString(idPasienSimpan));
+        gantiFrame.JadwalMulaiPlaceholder.setText(simpanJadwalMulai);
+        gantiFrame.JadwalBerakhirPlaceHolder.setText(simpanJadwalAkhir);
+        gantiFrame.GejalaPlaceHolder.setText(simpanGejala);
+        gantiFrame.NamaObatPlaceholder.setText(obatSaatIni);
+        gantiFrame.DosisObatPlaceholder.setText(simpanDosisObat);
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
         this.dispose();
@@ -315,9 +354,34 @@ public class konfirmasiObat extends javax.swing.JFrame {
         // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_LogoutButtonActionPerformed
+
+    private void konfirmasiObatList2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_konfirmasiObatList2MouseClicked
+        // TODO add your handling code here:
+        try{
+            if(konfirmasiObatList2.getSelectedIndex() > -1){
+            Connection getExtraData = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement2 = getExtraData.createStatement();
+            String getExtraDataQuery = "SELECT IDPasien , AKUN.Username, OBAT.NAMA FROM JADWAL NATURAL JOIN AKUN NATURAL JOIN OBAT WHERE ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 0 AND AKUN.ROLE = 'PASIEN'";
+            ResultSet result2 = statement2.executeQuery(getExtraDataQuery);
+            result2.first();
+            namaPasienSimpan = result2.getString("USERNAME");
+            idPasienSimpan = result2.getInt("JADWAL.IDPASIEN");
+            obatSaatIni = result2.getString("OBAT.NAMA");
+            outputNamaKonfirmasi.setText(namaPasienSimpan);
+            outputId2Konfirmasi.setText(Integer.toString(idPasienSimpan));
+            getExtraData.close();
+            statement2.close();
+        }
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }//GEN-LAST:event_konfirmasiObatList2MouseClicked
 
     /**
      * @param args the command line arguments
@@ -353,6 +417,39 @@ public class konfirmasiObat extends javax.swing.JFrame {
             }
         });
     }
+    
+     public void getIDObatForEdit(){
+        try{
+            Connection getIDObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getIDObat.createStatement();
+            String queryGetIDObat = "SELECT IDOBAT FROM OBAT WHERE NAMA = '" + obatSaatIni  +"'";
+            ResultSet result = statement.executeQuery(queryGetIDObat);
+            result.first();
+            simpanIDObat = result.getInt("IDOBAT");
+            getIDObat.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
+     
+     public void getJadwalDetailsForView(){
+         try{
+            Connection getJadwalDetails = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getJadwalDetails.createStatement();
+            String queryGetDetailJadwal = "SELECT START_DATE, END_DATE, GEJALA, DOSIS FROM JADWAL WHERE IDJADWAL = (SELECT IDJADWAL FROM JADWAL WHERE IDPASIEN = " + idPasienSimpan + " AND IDOBAT = " + simpanIDObat +")";
+            ResultSet result = statement.executeQuery(queryGetDetailJadwal);
+            result.first();
+            simpanJadwalMulai = result.getString("START_DATE");
+            simpanJadwalAkhir = result.getString("END_DATE");
+            simpanGejala = result.getString("GEJALA");
+            simpanDosisObat = result.getString("DOSIS");
+            getJadwalDetails.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutButton;
@@ -361,16 +458,14 @@ public class konfirmasiObat extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton konfirmasiObat2;
-    private javax.swing.JLabel outputId2Konfirmasi;
-    private javax.swing.JLabel outputNamaKonfirmasi;
-    private javax.swing.JLabel outputStatusKonfirmasi;
+    public javax.swing.JList<String> konfirmasiObatList2;
+    public javax.swing.JLabel outputId2Konfirmasi;
+    public javax.swing.JLabel outputNamaKonfirmasi;
     private javax.swing.JButton setujuButton;
     private javax.swing.JButton tidakSetujuButton;
     private javax.swing.JButton viewJadwal;
