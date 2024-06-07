@@ -55,11 +55,6 @@ public class SignUp_Pasien_UI extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         SignInMenuButton2.setText("Sign In");
-        SignInMenuButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                SignInMenuButton2ActionPerformed(evt);
-            }
-        });
 
         SignUpMenuButton2.setText("Sign Up");
         SignUpMenuButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -200,14 +195,6 @@ public class SignUp_Pasien_UI extends javax.swing.JFrame {
             System.out.println("Error!"+e);
         }
     }//GEN-LAST:event_DaftarButtonActionPerformed
-
-    private void SignInMenuButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignInMenuButton2ActionPerformed
-        // TODO add your handling code here:
-        Login_UI backToLogin = new Login_UI();
-        backToLogin.setVisible(true);
-        backToLogin.setLocationRelativeTo(null);
-        dispose();
-    }//GEN-LAST:event_SignInMenuButton2ActionPerformed
 
     /**
      * @param args the command line arguments

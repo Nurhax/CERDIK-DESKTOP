@@ -7,7 +7,9 @@ package cerdik.desktop;
 
 import static cerdik.desktop.Account.createID;
 import cerdik.desktop.JDBC.JDBC;
+import guiApoteker.Persetujuan;
 import java.sql.SQLException;
+import static uinakes.jadwalPasien.model;
 
 /**
  *
@@ -21,8 +23,8 @@ public class MainProgram {
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
         Pasien test = new Pasien();
-        System.out.println(createID());
-        
+        Persetujuan MainTest = new Persetujuan();
+        MainTest.setVisible(true);
     }
     
 }

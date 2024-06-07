@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uinakes;
+package guiApoteker;
 
+import uinakes.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -32,8 +33,8 @@ public class helpCenter extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         helpCenter3 = new javax.swing.JButton();
         LogoutButton = new javax.swing.JButton();
-        inputJadwal3 = new javax.swing.JButton();
-        konfirmasiObat3 = new javax.swing.JButton();
+        GoToDashboardButton = new javax.swing.JButton();
+        GoToDatabaseButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -69,17 +70,17 @@ public class helpCenter extends javax.swing.JFrame {
             }
         });
 
-        inputJadwal3.setText("Input");
-        inputJadwal3.addActionListener(new java.awt.event.ActionListener() {
+        GoToDashboardButton.setText("Dashborad");
+        GoToDashboardButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                inputJadwal3ActionPerformed(evt);
+                GoToDashboardButtonActionPerformed(evt);
             }
         });
 
-        konfirmasiObat3.setText("Konfirm");
-        konfirmasiObat3.addActionListener(new java.awt.event.ActionListener() {
+        GoToDatabaseButton.setText("Database");
+        GoToDatabaseButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                konfirmasiObat3ActionPerformed(evt);
+                GoToDatabaseButtonActionPerformed(evt);
             }
         });
 
@@ -92,17 +93,17 @@ public class helpCenter extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(helpCenter3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(LogoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(inputJadwal3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(konfirmasiObat3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(GoToDashboardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(GoToDatabaseButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addComponent(inputJadwal3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(GoToDashboardButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(konfirmasiObat3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(GoToDatabaseButton, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(helpCenter3, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(114, 114, 114)
@@ -114,7 +115,7 @@ public class helpCenter extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Times New Roman", 1, 30)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Help Center Pasien");
+        jLabel1.setText("Help Center Apoteker");
         jLabel1.setAlignmentX(0.5F);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -124,7 +125,7 @@ public class helpCenter extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,7 +257,7 @@ public class helpCenter extends javax.swing.JFrame {
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pertanyaan5, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addComponent(pertanyaan5, javax.swing.GroupLayout.PREFERRED_SIZE, 415, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
@@ -309,7 +310,7 @@ public class helpCenter extends javax.swing.JFrame {
                     .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -343,21 +344,21 @@ public class helpCenter extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_helpCenter3ActionPerformed
 
-    private void inputJadwal3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJadwal3ActionPerformed
+    private void GoToDashboardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoToDashboardButtonActionPerformed
         // TODO add your handling code here:
-        jadwalPasien gantiFrame = new jadwalPasien();
+        Persetujuan gantiFrame = new Persetujuan();
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_inputJadwal3ActionPerformed
+    }//GEN-LAST:event_GoToDashboardButtonActionPerformed
 
-    private void konfirmasiObat3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_konfirmasiObat3ActionPerformed
+    private void GoToDatabaseButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_GoToDatabaseButtonActionPerformed
         // TODO add your handling code here:
-        konfirmasiObat gantiFrame = new konfirmasiObat();
+        InputDeleteLihatDatabase gantiFrame = new InputDeleteLihatDatabase();
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_konfirmasiObat3ActionPerformed
+    }//GEN-LAST:event_GoToDatabaseButtonActionPerformed
 
     private void pertanyaan1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pertanyaan1MouseClicked
         // TODO add your handling code here:
@@ -418,6 +419,7 @@ public class helpCenter extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(helpCenter.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -428,9 +430,10 @@ public class helpCenter extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton GoToDashboardButton;
+    private javax.swing.JButton GoToDatabaseButton;
     private javax.swing.JButton LogoutButton;
     private javax.swing.JButton helpCenter3;
-    private javax.swing.JButton inputJadwal3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -441,7 +444,6 @@ public class helpCenter extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JLabel jawabanPertanyaan;
-    private javax.swing.JButton konfirmasiObat3;
     private javax.swing.JLabel pertanyaan1;
     private javax.swing.JLabel pertanyaan2;
     private javax.swing.JLabel pertanyaan3;

@@ -20,8 +20,6 @@ public class konfirmasiObat extends javax.swing.JFrame {
     public konfirmasiObat() {
         initComponents();
     }
-    
-    public static int simpanIDNakes;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -45,11 +43,11 @@ public class konfirmasiObat extends javax.swing.JFrame {
         tidakSetujuButton = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        outputNamaKonfirmasi = new javax.swing.JLabel();
+        outputNama = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        outputId2Konfirmasi = new javax.swing.JLabel();
+        outputId2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        outputStatusKonfirmasi = new javax.swing.JLabel();
+        outputStatus = new javax.swing.JLabel();
         viewJadwal = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -137,6 +135,11 @@ public class konfirmasiObat extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Nama User Pertama", "Nama User Kedua", "Nama User ketiga", "Nama User Keempat" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
         jScrollPane1.setViewportView(jList1);
 
         setujuButton.setText("Setuju");
@@ -146,7 +149,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
             }
         });
 
-        tidakSetujuButton.setText("Tidak Setuju");
+        tidakSetujuButton.setText("TIdak Setuju");
         tidakSetujuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tidakSetujuButtonActionPerformed(evt);
@@ -157,15 +160,15 @@ public class konfirmasiObat extends javax.swing.JFrame {
 
         jLabel2.setText("Nama Pasien :");
 
-        outputNamaKonfirmasi.setText("\" \"");
+        outputNama.setText("output nama");
 
         jLabel3.setText("Id Pasien      :");
 
-        outputId2Konfirmasi.setText("\" \"");
+        outputId2.setText("output id");
 
         jLabel4.setText("Status          :");
 
-        outputStatusKonfirmasi.setText("tidak Setuju/Setuju");
+        outputStatus.setText("tidak Setuju/Setuju");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -179,15 +182,15 @@ public class konfirmasiObat extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel3)
                             .addGap(18, 18, 18)
-                            .addComponent(outputId2Konfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(outputId2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel4)
                             .addGap(18, 18, 18)
-                            .addComponent(outputStatusKonfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(outputStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGroup(jPanel1Layout.createSequentialGroup()
                             .addComponent(jLabel2)
                             .addGap(18, 18, 18)
-                            .addComponent(outputNamaKonfirmasi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(outputNama, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addContainerGap()))
         );
         jPanel1Layout.setVerticalGroup(
@@ -198,15 +201,15 @@ public class konfirmasiObat extends javax.swing.JFrame {
                     .addGap(37, 37, 37)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(outputNamaKonfirmasi))
+                        .addComponent(outputNama))
                     .addGap(35, 35, 35)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(outputId2Konfirmasi))
+                        .addComponent(outputId2))
                     .addGap(39, 39, 39)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(outputStatusKonfirmasi))
+                        .addComponent(outputStatus))
                     .addContainerGap(37, Short.MAX_VALUE)))
         );
 
@@ -270,7 +273,6 @@ public class konfirmasiObat extends javax.swing.JFrame {
     private void inputJadwal2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJadwal2ActionPerformed
         // TODO add your handling code here:
         jadwalPasien gantiFrame = new jadwalPasien();
-        jadwalPasien.getAllPasien();
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
         this.dispose();
@@ -291,7 +293,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
     private void setujuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_setujuButtonActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(this, "Jadwal telah anda setujui!");
-        outputStatusKonfirmasi.setText("Setuju");
+        outputStatus.setText("Setuju");
     }//GEN-LAST:event_setujuButtonActionPerformed
 
     private void tidakSetujuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tidakSetujuButtonActionPerformed
@@ -300,7 +302,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
         popUpTidakSetuju gantiFrame = new popUpTidakSetuju(popUp,true);
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
-        outputStatusKonfirmasi.setText("Tidak Setuju");
+        outputStatus.setText("Tidak Setuju");
     }//GEN-LAST:event_tidakSetujuButtonActionPerformed
 
     private void viewJadwalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewJadwalActionPerformed
@@ -368,9 +370,9 @@ public class konfirmasiObat extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton konfirmasiObat2;
-    private javax.swing.JLabel outputId2Konfirmasi;
-    private javax.swing.JLabel outputNamaKonfirmasi;
-    private javax.swing.JLabel outputStatusKonfirmasi;
+    private javax.swing.JLabel outputId2;
+    private javax.swing.JLabel outputNama;
+    private javax.swing.JLabel outputStatus;
     private javax.swing.JButton setujuButton;
     private javax.swing.JButton tidakSetujuButton;
     private javax.swing.JButton viewJadwal;

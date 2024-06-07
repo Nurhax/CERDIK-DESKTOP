@@ -9,8 +9,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -20,25 +19,7 @@ public class Pasien extends Account implements SignUp,Displays{
     private int Usia;
     private String Nama;    
     private String Gender;
-    private String Gejala;
-    private String Obat;
 
-    public static ArrayList<Pasien> listPasien = new ArrayList<>();
-    
-    public Pasien(){}
-    
-    public Pasien(String username, String ID, String gejala, String Obat){
-        super(username,ID);
-        this.Gejala = gejala;
-        this.Obat = Obat;
-    }
-    
-    public Pasien(String Fullname, String Gender, int Usia){
-        this.Usia = Usia;
-        this.Nama = Fullname;
-        this.Gender = Gender;
-    }
-    
     public String getNama() {
         return Nama;
     }
@@ -62,23 +43,6 @@ public class Pasien extends Account implements SignUp,Displays{
     public void setGender(String Gender) {
         this.Gender = Gender;
     }
-
-    public String getGejala() {
-        return Gejala;
-    }
-
-    public void setGejala(String Gejala) {
-        this.Gejala = Gejala;
-    }
-
-    public String getObat() {
-        return Obat;
-    }
-
-    public void setObat(String Obat) {
-        this.Obat = Obat;
-    }
-    
     
     
     

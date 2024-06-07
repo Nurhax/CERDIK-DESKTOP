@@ -39,7 +39,7 @@
                   <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
                   <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace pref="38" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -89,8 +89,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="helpCenter3" alignment="0" max="32767" attributes="0"/>
                       <Component id="LogoutButton" alignment="0" max="32767" attributes="0"/>
-                      <Component id="inputJadwal3" alignment="0" max="32767" attributes="0"/>
-                      <Component id="konfirmasiObat3" alignment="0" max="32767" attributes="0"/>
+                      <Component id="GoToDashboardButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="GoToDatabaseButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -100,9 +100,9 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
-                  <Component id="inputJadwal3" min="-2" pref="78" max="-2" attributes="0"/>
+                  <Component id="GoToDashboardButton" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                  <Component id="konfirmasiObat3" min="-2" pref="78" max="-2" attributes="0"/>
+                  <Component id="GoToDatabaseButton" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="helpCenter3" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
@@ -134,20 +134,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="LogoutButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="inputJadwal3">
+        <Component class="javax.swing.JButton" name="GoToDashboardButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Input"/>
+            <Property name="text" type="java.lang.String" value="Dashborad"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputJadwal3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoToDashboardButtonActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="konfirmasiObat3">
+        <Component class="javax.swing.JButton" name="GoToDatabaseButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Konfirm"/>
+            <Property name="text" type="java.lang.String" value="Database"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="konfirmasiObat3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="GoToDatabaseButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -165,7 +165,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="27" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -186,7 +186,7 @@
               <Font name="Times New Roman" size="30" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="Help Center Pasien"/>
+            <Property name="text" type="java.lang.String" value="Help Center Apoteker"/>
             <Property name="alignmentX" type="float" value="0.5"/>
           </Properties>
         </Component>

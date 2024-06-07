@@ -5,10 +5,17 @@
  */
 package cerdik.desktop;
 
+import cerdik.desktop.JDBC.JDBC;
+import guiApoteker.Obat;
+import static guiApoteker.Obat.createID;
+import static guiApoteker.Obat.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -26,7 +33,7 @@ public class Apoteker extends Account implements SignUp,Displays{
             result.first();
             
             if(result.getString("Password").equals(Password) && result.getString("Role").equals("APOTEKER")){
-                return "APOTEKER";
+                return "PASIEN";
             }
             
             if(!result.getString("Password").equals(Password)){
@@ -74,5 +81,60 @@ public class Apoteker extends Account implements SignUp,Displays{
         
         return null;
     }
+    public static void addObat(String nama, String jenis, String saranPenyajian,int stok) {
+          int idObatRandom = createID();
+    try {
+        Connection addObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik", "root", "");
+        Statement statement = addObat.createStatement();
+        String AddQuery = "INSERT INTO OBAT VALUES('" + idObatRandom + "','" + nama + "','" + jenis + "','" + saranPenyajian + "','" + stok + "')";
+        statement.executeUpdate(AddQuery);
+        statement.close();
+        addObat.close();
+        System.out.println("Obat Berhasil Ditambah!");
+    } catch (Exception e) {
+        System.out.println("Error! " + e);
+    }
+    }
+    public static void deleteObat(Obat selectedObat){
+         if (selectedObat != null){
+            String nama = selectedObat.getNamaObat();
+            String jenis = selectedObat.getJenisObat();
+            try{
+                Connection addObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik", "root", "");
+                Statement statement = addObat.createStatement();
+                String AddQuery = "DELETE FROM OBAT WHERE NAMA = '" + nama + "' AND JENIS = '" + jenis + "'";
+                statement.executeUpdate(AddQuery);
+                statement.close();
+                System.out.println("Obat Berhasil dihapus");
+            } catch (SQLException ex){
+               System.out.println("Error! " + ex);
+            }
+        }     
+    }
+    
+   public static void editObat(String nama, String jenis, String saranPenyajian, int stok) {
+    try {
+        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/cerdik", "root", "");
+        String updateQuery = "UPDATE OBAT SET `JENIS` = ?, `SARAN PENYAJIAN` = ?, `STOK` = ? WHERE `NAMA` = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateQuery);
+        preparedStatement.setString(1, jenis);
+        preparedStatement.setString(2, saranPenyajian);
+        preparedStatement.setInt(3, stok);
+        preparedStatement.setString(4, nama);
+
+        int rowsUpdated = preparedStatement.executeUpdate();
+        if (rowsUpdated > 0) {
+            System.out.println("Obat Berhasil Diubah!");
+        } else {
+            System.out.println("Obat tidak ditemukan atau tidak ada perubahan.");
+        }
+        
+        preparedStatement.close();
+        connection.close();
+    } catch (SQLException e) {
+        System.out.println("Error! " + e);
+    }
+}
+
     
 }

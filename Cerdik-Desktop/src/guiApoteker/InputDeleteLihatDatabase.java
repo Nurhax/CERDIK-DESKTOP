@@ -5,6 +5,18 @@
  */
 package guiApoteker;
 
+import cerdik.desktop.JDBC.JDBC;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import static cerdik.desktop.Apoteker.*;
+
 /**
  *
  * @author NITRO 5
@@ -16,8 +28,35 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
      */
     public InputDeleteLihatDatabase() {
         initComponents();
+        loadObatList();
     }
 
+   private void loadObatList() {
+    JDBC db = new JDBC();
+    List<Obat> obatList = db.getObatList();
+    DefaultTableModel tableModel = (DefaultTableModel) ObatTable.getModel();
+    for (Obat obat : obatList) {
+        tableModel.addRow(new Object[]{obat.getNamaObat(), obat.getJenisObat(), obat.getStokObat()});
+        }
+    }
+   private Obat getSelectedObat() {
+    int selectedRow = ObatTable.getSelectedRow();
+    if (selectedRow >= 0) {
+        String namaObat = (String) ObatTable.getValueAt(selectedRow, 0);
+        String jenisObat = (String) ObatTable.getValueAt(selectedRow, 1);
+        
+        JDBC db = new JDBC();
+        return db.getObatDetails(namaObat, jenisObat);
+    } else {
+        JOptionPane.showMessageDialog(null, "No row selected", "Error", JOptionPane.WARNING_MESSAGE);
+        return null;
+    }
+    }
+   
+   private void clearObatList() {
+        DefaultTableModel tableModel = (DefaultTableModel) ObatTable.getModel();
+        tableModel.setRowCount(0);  // This removes all rows from the table model
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,11 +72,11 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        ObatTable = new javax.swing.JTable();
+        TambahObatButton = new javax.swing.JButton();
+        DeleteObatButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
+        EditObatButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -55,6 +94,11 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jButton3.setText("Help Center");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Logout");
 
@@ -66,7 +110,7 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -85,36 +129,12 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        ObatTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
-                "Nama Obat", "Jenis Obat", "Jumlah Stok"
+                "Nama Obat", "Jenis Obat", "Stok Obat"
             }
         ) {
             Class[] types = new Class [] {
@@ -125,16 +145,31 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(ObatTable);
 
-        jButton6.setText("Tambah Obat");
+        TambahObatButton.setText("Tambah Obat");
+        TambahObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TambahObatButtonActionPerformed(evt);
+            }
+        });
 
-        jButton7.setText("Delete Obat");
+        DeleteObatButton.setText("Delete Obat");
+        DeleteObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                DeleteObatButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jLabel1.setText("Database Obat");
 
-        jButton8.setText("jButton8");
+        EditObatButton.setText("jButton8");
+        EditObatButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EditObatButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,12 +183,12 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
                         .addGap(227, 227, 227)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(TambahObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(DeleteObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 426, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(EditObatButton, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(370, 370, 370)
                         .addComponent(jLabel1)))
@@ -172,11 +207,11 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton8))
+                            .addComponent(EditObatButton))
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton6)
-                            .addComponent(jButton7))
+                            .addComponent(TambahObatButton)
+                            .addComponent(DeleteObatButton))
                         .addGap(22, 22, 22)))
                 .addContainerGap())
         );
@@ -191,6 +226,40 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
         persetujuan.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void TambahObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TambahObatButtonActionPerformed
+        DefaultTableModel model = (DefaultTableModel) ObatTable.getModel();
+        AddObat addObatDialog = new AddObat(this, true, model);
+        addObatDialog.setLocationRelativeTo(null);
+        addObatDialog.setVisible(true);
+        clearObatList();
+        loadObatList();
+    }//GEN-LAST:event_TambahObatButtonActionPerformed
+
+    private void DeleteObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteObatButtonActionPerformed
+        Obat selectedObat= getSelectedObat();
+        deleteObat(selectedObat);
+        clearObatList();
+        loadObatList();
+       
+    }//GEN-LAST:event_DeleteObatButtonActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        helpCenter gantiFrame = new helpCenter();
+        gantiFrame.setLocationRelativeTo(null);
+        gantiFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void EditObatButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EditObatButtonActionPerformed
+        Obat selectedObat = getSelectedObat();
+        DefaultTableModel model = (DefaultTableModel) ObatTable.getModel();
+        EditObat editObatDialog = new EditObat(this, true, model,selectedObat);
+        editObatDialog.setLocationRelativeTo(null);
+        editObatDialog.setVisible(true);
+        clearObatList();
+        loadObatList();
+    }//GEN-LAST:event_EditObatButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,16 +297,16 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DeleteObatButton;
+    private javax.swing.JButton EditObatButton;
+    private javax.swing.JTable ObatTable;
+    private javax.swing.JButton TambahObatButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

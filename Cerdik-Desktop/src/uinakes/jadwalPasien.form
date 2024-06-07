@@ -29,24 +29,16 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
+                  <Component id="tambahButton" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="400" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jPanel2" alignment="0" max="32767" attributes="0"/>
-                          <Component id="tambahButton" alignment="0" max="32767" attributes="0"/>
-                          <Group type="102" attributes="0">
-                              <Component id="editButton1" min="-2" pref="161" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="hapusButton" min="-2" pref="155" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                      <Component id="editButton1" min="-2" pref="161" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="hapusButton" min="-2" pref="155" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace pref="28" max="32767" attributes="0"/>
@@ -62,9 +54,7 @@
                       <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jPanel2" max="32767" attributes="0"/>
@@ -99,8 +89,8 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="helpCenterButton" alignment="0" max="32767" attributes="0"/>
-                      <Component id="konfirmasiObatButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="helpCenter" alignment="0" max="32767" attributes="0"/>
+                      <Component id="konfirmasiObat" alignment="0" max="32767" attributes="0"/>
                       <Component id="inputJadwal" max="32767" attributes="0"/>
                       <Component id="LogoutButton" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -114,9 +104,9 @@
                   <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                   <Component id="inputJadwal" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="konfirmasiObatButton" min="-2" pref="78" max="-2" attributes="0"/>
+                  <Component id="konfirmasiObat" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="helpCenterButton" min="-2" pref="78" max="-2" attributes="0"/>
+                  <Component id="helpCenter" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                   <Component id="LogoutButton" min="-2" pref="78" max="-2" attributes="0"/>
                   <EmptySpace pref="40" max="32767" attributes="0"/>
@@ -138,20 +128,20 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inputJadwalActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="konfirmasiObatButton">
+        <Component class="javax.swing.JButton" name="konfirmasiObat">
           <Properties>
             <Property name="text" type="java.lang.String" value="Konfirm"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="konfirmasiObatButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="konfirmasiObatActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="helpCenterButton">
+        <Component class="javax.swing.JButton" name="helpCenter">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpCenterButtonActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="helpCenterActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="LogoutButton">
@@ -179,18 +169,19 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JList" name="listPasien">
+        <Component class="javax.swing.JList" name="listPasein">
           <Properties>
             <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-              <StringArray count="0"/>
+              <StringArray count="4">
+                <StringItem index="0" value="Nama User Pertama"/>
+                <StringItem index="1" value="Nama User Kedua"/>
+                <StringItem index="2" value="Nama User ketiga"/>
+                <StringItem index="3" value="Nama User Keempat"/>
+              </StringArray>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listPasienMouseClicked"/>
-          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
           </AuxValues>
         </Component>
       </SubComponents>
@@ -248,7 +239,7 @@
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="125" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="114" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -296,6 +287,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="outputNama">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="output nama"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
@@ -303,30 +297,31 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="outputId">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="output id"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gejala :"/>
+            <Property name="text" type="java.lang.String" value="Penyakit       :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="outputPenyakit">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="nama penyakit"/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Obat   :"/>
+            <Property name="text" type="java.lang.String" value="Obat            :"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="outputObat">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="nama obat"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JLabel" name="jLabel6">
-      <Properties>
-        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-          <Font name="Impact" size="14" style="0"/>
-        </Property>
-        <Property name="text" type="java.lang.String" value="List Pasien (IDPasien dan Nama)"/>
-      </Properties>
-    </Component>
   </SubComponents>
 </Form>
