@@ -303,6 +303,8 @@ public class jadwalPasien extends javax.swing.JFrame {
             editUI.IDPasienPlaceHolder.setText(outputId.getText());
             editUI.gejalaTextField.setText(outputPenyakit.getText());
             editUI.NamaObatSaatIniPlaceHolder.setText(outputObat.getText());
+            editJadwal.simpanNamaObat = outputObat.getText();
+            editJadwal.simpanGejala = outputPenyakit.getText();
             //Ngambil jadwal start,jadwal end dan dosis untuk edit obat
             try{
             Connection getDataEdit = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
@@ -403,7 +405,7 @@ public class jadwalPasien extends javax.swing.JFrame {
         });
     }
     
-    public static void getAllPasien(){
+    public void getAllPasien(){
                 //auto fill jadwal pasien yang udah pernah diinput
                 listPasienModel.clear();
                 listPasien.setModel(listPasienModel);
@@ -414,7 +416,7 @@ public class jadwalPasien extends javax.swing.JFrame {
                     ResultSet result = statement.executeQuery(getPasienQuery);
                     while(result.next()){
                         listPasienModel.addElement(result.getString("ACCOUNTID") + " " + result.getString("USERNAME"));
-                        Pasien.listPasien.add(new Pasien(result.getString("USERNAME"), Integer.toString(result.getInt("ACCOUNTID")), result.getString("GEJALA"), result.getString("NAMA")));
+                        Pasien.listPasien.add(new Pasien(result.getString("USERNAME"), Integer.toString(result.getInt("ACCOUNTID")), result.getString("GEJALA"), result.getString("OBAT.NAMA")));
                     }
                     listPasien.setModel(listPasienModel);
                     
@@ -426,9 +428,6 @@ public class jadwalPasien extends javax.swing.JFrame {
                 }
     }
     
-    public void getDataEdit(){
-        
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutButton;

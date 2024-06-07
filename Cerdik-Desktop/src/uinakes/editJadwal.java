@@ -34,6 +34,11 @@ public class editJadwal extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     DefaultListModel modelSearchObat = new DefaultListModel();
+    public static String simpanNamaObat;
+    public int simpanIDJadwal;
+    public static String simpanGejala;
+    public int simpanIDObat;
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -284,19 +289,22 @@ public class editJadwal extends javax.swing.JFrame {
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
         // TODO add your handling code here:
+        getIDJadwalForEdit();
+        getIDObatForEdit();
         try{
             Connection editDataPasien = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = editDataPasien.createStatement();
-            String editQuery = "UPDATE JADWAL SET START_DATE = " + "'" + jadwalMulaiTextField.getText() + "'" + "END_DATE = " + "'" + jadwalSelesaiTextField.getText() + "'" + "GEJALA = " + "'" + gejalaTextField.getText() + "'" + "DOSIS = " + "'" + inputDosisObat.getText() + "'" + "IDOBAT = (SELECT IDOBAT FROM OBAT WHERE NAMA = " + "'" + NamaObatSaatIniPlaceHolder.getText() + "')" ;
+            String editQuery = "UPDATE JADWAL SET START_DATE = " + "'" + jadwalMulaiTextField.getText() + "'," + "END_DATE = " + "'" + jadwalSelesaiTextField.getText() + "'," + "GEJALA = " + "'" + gejalaTextField.getText() + "'," + "DOSIS = " + "'" + inputDosisObat.getText() + "'," + "IDOBAT = " + simpanIDObat + " WHERE IDJADWAL = " + simpanIDJadwal ;
+            System.out.println(editQuery);
             statement.executeUpdate(editQuery);
             editDataPasien.close();
             statement.close();
             JOptionPane.showMessageDialog(this,"Data telah diedit!");
             jadwalPasien gantiFrame = new jadwalPasien();
-            jadwalPasien.getAllPasien();
+            gantiFrame.getAllPasien();
             gantiFrame.setLocationRelativeTo(null);
             gantiFrame.setVisible(true);
-        this.dispose();
+            this.dispose();
         }catch(Exception e){
             System.out.println("Error! " + e);
         }
@@ -342,7 +350,41 @@ public class editJadwal extends javax.swing.JFrame {
             NamaObatSaatIniPlaceHolder.setText(modelSearchObat.get(HasilCariObat.getSelectedIndex()).toString());
         }
     }//GEN-LAST:event_HasilCariObatMouseClicked
-
+    
+    public void getIDJadwalForEdit(){
+        try{
+            Connection getIDJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getIDJadwal.createStatement();
+            String queryGetIDJadwal = "SELECT IDJADWAL FROM JADWAL WHERE IDPASIEN = " + Integer.valueOf(IDPasienPlaceHolder.getText()) + 
+                              " AND IDNAKES = " + jadwalPasien.saveIDNakes + 
+                              " AND GEJALA = '" + simpanGejala + 
+                              "' AND IDOBAT = (SELECT IDOBAT FROM OBAT WHERE OBAT.NAMA = '" + simpanNamaObat + "')";
+            ResultSet result = statement.executeQuery(queryGetIDJadwal);
+            result.first();
+            simpanIDJadwal = result.getInt("IDJADWAL");
+            getIDJadwal.close();
+            statement.close();
+            System.out.println("DAPET IDJADWAL!");
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
+    
+    public void getIDObatForEdit(){
+        try{
+            Connection getIDObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getIDObat.createStatement();
+            String queryGetIDObat = "SELECT IDOBAT FROM OBAT WHERE NAMA = '" + NamaObatSaatIniPlaceHolder.getText()  +"'";
+            ResultSet result = statement.executeQuery(queryGetIDObat);
+            result.first();
+            simpanIDObat = result.getInt("IDOBAT");
+            getIDObat.close();
+            statement.close();
+            System.out.println("DAPET IDOBAT!");
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
     /**
      * @param args the command line arguments
      */

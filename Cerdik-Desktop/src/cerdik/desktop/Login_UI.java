@@ -199,7 +199,7 @@ public class Login_UI extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
                 jadwalPasien nakes = new jadwalPasien();
                 jadwalPasien.saveIDNakes = jdbcLogin.getIDFromDB(UsernameTextField1.getText().trim());
-                jadwalPasien.getAllPasien();
+                nakes.getAllPasien();
                 nakes.setLocationRelativeTo(null);
                 nakes.setVisible(true);
                 this.dispose();

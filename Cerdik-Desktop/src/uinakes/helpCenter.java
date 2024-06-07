@@ -348,7 +348,7 @@ public class helpCenter extends javax.swing.JFrame {
     private void inputJadwal3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputJadwal3ActionPerformed
         // TODO add your handling code here:
         jadwalPasien gantiFrame = new jadwalPasien();
-        jadwalPasien.getAllPasien();
+        gantiFrame.getAllPasien();
         gantiFrame.setLocationRelativeTo(null);
         gantiFrame.setVisible(true);
         this.dispose();

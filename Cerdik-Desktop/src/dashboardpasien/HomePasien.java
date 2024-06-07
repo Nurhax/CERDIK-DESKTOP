@@ -500,7 +500,7 @@ public class HomePasien extends javax.swing.JFrame {
             
             Connection cekInfoObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = cekInfoObat.createStatement();
-            String queryGetObat = "SELECT OBAT.NAMA, OBAT.SARAN_PENYAJIAN, OBAT.JENIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'";
+            String queryGetObat = "SELECT OBAT.NAMA, OBAT.SARAN_PENYAJIAN, OBAT.JENIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'" +"AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
             ResultSet result = statement.executeQuery(queryGetObat);
             while(result.next()){
                 modelInfoObat.addElement(result.getString("NAMA"));
@@ -527,7 +527,7 @@ public class HomePasien extends javax.swing.JFrame {
             
             Connection getOverview = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = getOverview.createStatement();
-            String queryOverview = "SELECT OBAT.NAMA, GEJALA, DOSIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'";
+            String queryOverview = "SELECT OBAT.NAMA, GEJALA, DOSIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "' AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
             ResultSet result = statement.executeQuery(queryOverview);
             while(result.next()){
                 modelDetail.addElement(result.getString("NAMA") + " " + result.getString("GEJALA") + " " + result.getString("DOSIS"));
@@ -552,7 +552,7 @@ public class HomePasien extends javax.swing.JFrame {
             
             Connection cekGejala = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = cekGejala.createStatement();
-            String queryGejala = "SELECT GEJALA FROM JADWAL WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'";
+            String queryGejala = "SELECT GEJALA FROM JADWAL WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "' AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
             ResultSet result = statement.executeQuery(queryGejala);
             while(result.next()){
                 modelGejala.addElement(result.getString("GEJALA"));
