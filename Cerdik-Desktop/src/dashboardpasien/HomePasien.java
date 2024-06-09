@@ -5,8 +5,15 @@
  */
 package dashboardpasien;
 
-import java.awt.Toolkit;
-import java.awt.event.WindowEvent;
+import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
@@ -23,7 +30,18 @@ public class HomePasien extends javax.swing.JFrame {
         initComponents();
     }
     
-     DefaultListModel mod = new DefaultListModel();
+    JDBC JDBCManager = new JDBC();
+    
+
+    
+     DefaultListModel modelDetail = new DefaultListModel();
+     DefaultListModel modelInfoObat = new DefaultListModel();
+     DefaultListModel modelGejala = new DefaultListModel();
+     ArrayList<String> SaranPenyajianSave = new ArrayList<>();
+     ArrayList<String> DetailObatSave = new ArrayList<>();
+     
+     
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -40,23 +58,26 @@ public class HomePasien extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton3 = new javax.swing.JButton();
+        ListGejala = new javax.swing.JList<>();
+        DeleteGejala = new javax.swing.JButton();
         TextNamaPasien = new javax.swing.JLabel();
         TextHalo = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        IDPasienPlaceHolder = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jList2 = new javax.swing.JList<>();
+        ListInfoObat = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         SaranPenyajian = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        SaranPenyajianPlaceHolder = new javax.swing.JLabel();
+        DetailObatPlaceHolder = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jList3 = new javax.swing.JList<>();
-        jButton5 = new javax.swing.JButton();
-        jCalendar2 = new com.toedter.calendar.JCalendar();
+        ListDetail = new javax.swing.JList<>();
+        jCalendar2Jadwal = new com.toedter.calendar.JCalendar();
         jPanel4 = new javax.swing.JPanel();
         LogOut = new javax.swing.JButton();
         Home = new javax.swing.JButton();
@@ -84,19 +105,19 @@ public class HomePasien extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        ListGejala.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
+                ListGejalaValueChanged(evt);
+            }
         });
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(ListGejala);
 
-        jButton3.setBackground(new java.awt.Color(166, 193, 217));
-        jButton3.setText("Delete");
-        jButton3.setBorder(null);
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        DeleteGejala.setBackground(new java.awt.Color(166, 193, 217));
+        DeleteGejala.setText("Delete");
+        DeleteGejala.setBorder(null);
+        DeleteGejala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                DeleteGejalaActionPerformed(evt);
             }
         });
 
@@ -106,6 +127,12 @@ public class HomePasien extends javax.swing.JFrame {
         TextHalo.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         TextHalo.setText("Halo");
 
+        jLabel3.setFont(new java.awt.Font("Impact", 0, 14)); // NOI18N
+        jLabel3.setText("ID Kamu:");
+
+        IDPasienPlaceHolder.setFont(new java.awt.Font("Impact", 0, 11)); // NOI18N
+        IDPasienPlaceHolder.setText("IDPasienPlaceHolder");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -114,14 +141,18 @@ public class HomePasien extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(TextHalo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TextNamaPasien))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(DeleteGejala, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(TextHalo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(TextNamaPasien)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(IDPasienPlaceHolder)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,22 +160,24 @@ public class HomePasien extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextHalo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(TextNamaPasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(TextNamaPasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3)
+                    .addComponent(IDPasienPlaceHolder))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(DeleteGejala, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         jPanel5.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList2.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        ListInfoObat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ListInfoObatMouseClicked(evt);
+            }
         });
-        jScrollPane2.setViewportView(jList2);
+        jScrollPane2.setViewportView(ListInfoObat);
 
         jLabel2.setText("Saran Penyajian");
 
@@ -166,7 +199,9 @@ public class HomePasien extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
-                            .addComponent(SaranPenyajian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(SaranPenyajian, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(SaranPenyajianPlaceHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(DetailObatPlaceHolder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(24, 24, 24))
         );
         jPanel5Layout.setVerticalGroup(
@@ -179,11 +214,14 @@ public class HomePasien extends javax.swing.JFrame {
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(SaranPenyajianPlaceHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(SaranPenyajian)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(DetailObatPlaceHolder, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
 
         jPanel7.setBackground(new java.awt.Color(224, 229, 236));
@@ -193,19 +231,16 @@ public class HomePasien extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(224, 229, 236));
 
-        jList3.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane4.setViewportView(jList3);
+        jScrollPane4.setViewportView(ListDetail);
 
-        jButton5.setBackground(new java.awt.Color(166, 193, 217));
-        jButton5.setText("Delete");
-        jButton5.setBorder(null);
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+        jCalendar2Jadwal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCalendar2JadwalMouseClicked(evt);
+            }
+        });
+        jCalendar2Jadwal.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                jCalendar2JadwalPropertyChange(evt);
             }
         });
 
@@ -216,25 +251,18 @@ public class HomePasien extends javax.swing.JFrame {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jCalendar2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jCalendar2Jadwal, javax.swing.GroupLayout.DEFAULT_SIZE, 342, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jCalendar2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jCalendar2Jadwal, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
@@ -244,7 +272,7 @@ public class HomePasien extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel5)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel7Layout.setVerticalGroup(
@@ -269,6 +297,7 @@ public class HomePasien extends javax.swing.JFrame {
 
         Home.setBackground(new java.awt.Color(224, 229, 236));
         Home.setText("Home");
+        Home.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Home.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 HomeActionPerformed(evt);
@@ -332,43 +361,36 @@ public class HomePasien extends javax.swing.JFrame {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+    private void DeleteGejalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteGejalaActionPerformed
         // TODO add your handling code here:
-        if (jList3.getSelectedIndex() == -1) {
-         JOptionPane.showMessageDialog(this, "Pilih jadwal yang ingin anda hapus dahulu !");
-        } else {
-             int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus jadwal ?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
-             if (response == JOptionPane.YES_OPTION) {
-                  //Code Hapus Gejala Pasien (YES OPTION)
-                   JOptionPane.showMessageDialog(this, "Berhasil dihapus");
-             } else if (response == JOptionPane.NO_OPTION) {
-                 //Tidak jadi hapus gejala (NO OPTION)
-             }     
-        }     
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-        if (jList1.getSelectedIndex() == -1) {
+        if (ListGejala.getSelectedIndex() == -1) {
              JOptionPane.showMessageDialog(this, "Pilih gejala yang ingin anda hapus dahulu !");
         } else {
              int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin menghapus gejala ?", "Confirm",JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE );
              if (response == JOptionPane.YES_OPTION) {
                   //Code Hapus Gejala Pasien (YES OPTION)
+                  try{
+                       int IDUser = JDBCManager.getIDFromDB(TextNamaPasien.getText());
+                       Connection hapusDataJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+                       Statement statement = hapusDataJadwal.createStatement();
+                       String QueryHapusJadwal = "DELETE FROM JADWAL WHERE GEJALA = " + "'" + modelGejala.get(ListGejala.getSelectedIndex()) + "'" + "AND IDPASIEN = " + "'" + IDUser + "'" + "AND IDOBAT = (SELECT IDOBAT FROM JADWAL WHERE IDPASIEN = " + "'" + IDUser + "')";
+                       statement.executeUpdate(QueryHapusJadwal);
+                       statement.close();
+                       hapusDataJadwal.close();
+                  }catch(Exception e){
+                      System.out.println("Error! " + e);
+                  }
                    JOptionPane.showMessageDialog(this, "Berhasil dihapus");
-             } else if (response == JOptionPane.NO_OPTION) {
-                 //Tidak jadi hapus gejala (NO OPTION)
-             }     
+             }   
         } 
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_DeleteGejalaActionPerformed
 
     private void HomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HomeActionPerformed
         // TODO add your handling code here:
@@ -380,16 +402,57 @@ public class HomePasien extends javax.swing.JFrame {
         HelpCenter changeToHelp = new HelpCenter();
         changeToHelp.setLocationRelativeTo(null);
         changeToHelp.setVisible(true);
+        changeToHelp.IDPasienPlaceHolder.setText(IDPasienPlaceHolder.getText());
         this.dispose();
     }//GEN-LAST:event_HelpActionPerformed
 
     private void LogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogOutActionPerformed
         // TODO add your handling code here:
-        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
+        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin logout?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+            this.dispose();
         }
     }//GEN-LAST:event_LogOutActionPerformed
+
+    private void jCalendar2JadwalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCalendar2JadwalMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCalendar2JadwalMouseClicked
+
+    private void jCalendar2JadwalPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar2JadwalPropertyChange
+        // TODO add your handling code here:
+        getGejala();
+        getInfoObat();
+        getOverviewJadwal();
+    }//GEN-LAST:event_jCalendar2JadwalPropertyChange
+
+    private void ListGejalaValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_ListGejalaValueChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ListGejalaValueChanged
+
+    private void ListInfoObatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ListInfoObatMouseClicked
+        // TODO add your handling code here:
+        try{
+            if(ListInfoObat.getSelectedIndex() > -1){
+                
+                if(SaranPenyajianSave.get(ListInfoObat.getSelectedIndex()).length() > 25){
+                    SaranPenyajianPlaceHolder.setText(SaranPenyajianSave.get(ListInfoObat.getSelectedIndex()).substring(0,25));
+                }else{
+                    SaranPenyajianPlaceHolder.setText(SaranPenyajianSave.get(ListInfoObat.getSelectedIndex()));
+                }
+                if(DetailObatSave.get(ListInfoObat.getSelectedIndex()).length() > 25){
+                    DetailObatPlaceHolder.setText(DetailObatSave.get(ListInfoObat.getSelectedIndex()).substring(0, 25));
+                }else{
+                    DetailObatPlaceHolder.setText(DetailObatSave.get(ListInfoObat.getSelectedIndex()));
+                }
+                
+            }
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }//GEN-LAST:event_ListInfoObatMouseClicked
 
     /**
      * @param args the command line arguments
@@ -422,26 +485,109 @@ public class HomePasien extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new HomePasien().setVisible(true);
+                
+                
             }
         });
     }
+    
+    //Mengambil info obat dari tabel obat dengan join tabel obat dan tabel jadwal
+    public void getInfoObat(){
+        modelInfoObat.removeAllElements();
+        SaranPenyajianSave.clear();
+        DetailObatSave.clear();
+        ListInfoObat.setModel(modelInfoObat);
+        try{
+            int IDUser = JDBCManager.getIDFromDB(TextNamaPasien.getText());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(jCalendar2Jadwal.getDate());
+            
+            Connection cekInfoObat = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cekInfoObat.createStatement();
+            String queryGetObat = "SELECT OBAT.NAMA, OBAT.SARAN_PENYAJIAN, OBAT.JENIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "'" +"AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
+            ResultSet result = statement.executeQuery(queryGetObat);
+            while(result.next()){
+                modelInfoObat.addElement(result.getString("NAMA"));
+                SaranPenyajianSave.add(result.getString("SARAN_PENYAJIAN"));
+                DetailObatSave.add(result.getString("JENIS"));
+            }
+            ListInfoObat.setModel(modelInfoObat);
+            cekInfoObat.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
+    
+
+    
+    public void getOverviewJadwal(){
+        modelDetail.removeAllElements();
+        ListDetail.setModel(modelDetail);
+        try{
+            int IDUser = JDBCManager.getIDFromDB(TextNamaPasien.getText());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(jCalendar2Jadwal.getDate());
+            
+            Connection getOverview = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = getOverview.createStatement();
+            String queryOverview = "SELECT OBAT.NAMA, GEJALA, DOSIS FROM JADWAL NATURAL JOIN OBAT WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "' AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
+            ResultSet result = statement.executeQuery(queryOverview);
+            while(result.next()){
+                modelDetail.addElement(result.getString("NAMA") + " " + result.getString("GEJALA") + " " + result.getString("DOSIS"));
+            }
+            ListDetail.setModel(modelDetail);
+            getOverview.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
+    
+    
+    //Mengambil gejala dari database dengan rentang waktu lebih dari start_date jadwal dan kurang dari end_date jadwal
+    public void getGejala(){
+        modelGejala.removeAllElements();
+        ListGejala.setModel(modelGejala);
+        try{
+            int IDUser = JDBCManager.getIDFromDB(TextNamaPasien.getText());
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String dateString = dateFormat.format(jCalendar2Jadwal.getDate());
+            
+            Connection cekGejala = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
+            Statement statement = cekGejala.createStatement();
+            String queryGejala = "SELECT GEJALA FROM JADWAL WHERE IDPasien = " + "'" + IDUser + "'" + "AND Start_Date <= " + "'" + dateString + "'" + " AND End_Date >= " + "'" + dateString + "' AND ISCONFIRMEDAPOTEKER = 1 AND ISCONFIRMEDNAKES = 1";
+            ResultSet result = statement.executeQuery(queryGejala);
+            while(result.next()){
+                modelGejala.addElement(result.getString("GEJALA"));
+            }
+            ListGejala.setModel(modelGejala);
+            cekGejala.close();
+            statement.close();
+        }catch(Exception e){
+            System.out.println("Error! " + e);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DeleteGejala;
+    public javax.swing.JLabel DetailObatPlaceHolder;
     private javax.swing.JButton Help;
     private javax.swing.JButton Home;
+    public javax.swing.JLabel IDPasienPlaceHolder;
+    private javax.swing.JList<String> ListDetail;
+    private javax.swing.JList<String> ListGejala;
+    private javax.swing.JList<String> ListInfoObat;
     private javax.swing.JButton LogOut;
     private javax.swing.JLabel SaranPenyajian;
+    public javax.swing.JLabel SaranPenyajianPlaceHolder;
     private javax.swing.JLabel TextHalo;
-    private javax.swing.JLabel TextNamaPasien;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
-    private com.toedter.calendar.JCalendar jCalendar2;
+    public javax.swing.JLabel TextNamaPasien;
+    private com.toedter.calendar.JCalendar jCalendar2Jadwal;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JList<String> jList1;
-    private javax.swing.JList<String> jList2;
-    private javax.swing.JList<String> jList3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;

@@ -11,9 +11,18 @@ package guiApoteker;
  */
 public class Jadwal {
     private int IDJadwal,IDPasien,IDObat;
-    private String Gejala, Dosis, Start_Date, End_Date,namaPasien;
+    private String Gejala, Dosis, Start_Date, End_Date,namaPasien, namaObat;
     private boolean IsConfirmedNakes, IsConfirmedApoteker;
 
+    public String getNamaObat() {
+        return namaObat;
+    }
+
+    public void setNamaObat(String namaObat) {
+        this.namaObat = namaObat;
+    }
+
+    
     public String getNamaPasien() {
         return namaPasien;
     }

@@ -5,6 +5,7 @@
  */
 package cerdik.desktop;
 
+import cerdik.desktop.JDBC.JDBC;
 import java.util.ArrayList;
 import java.sql.*;
 import javax.swing.JOptionPane;
@@ -34,6 +35,8 @@ public class Login_UI extends javax.swing.JFrame {
     Pasien pasien1 = new Pasien();
     TenagaKesehatan nakes1 = new TenagaKesehatan();
     Apoteker apoteker1 = new Apoteker();
+    JDBC jdbcLogin = new JDBC();
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -189,16 +192,22 @@ public class Login_UI extends javax.swing.JFrame {
                 HomePasien pasien = new HomePasien();
                 pasien.setLocationRelativeTo(null);
                 pasien.setVisible(true);
+                pasien.TextNamaPasien.setText(UsernameTextField1.getText().trim());
+                pasien.IDPasienPlaceHolder.setText(Integer.toString(jdbcLogin.getIDFromDB(UsernameTextField1.getText().trim())));
                 this.dispose();
             }else if(nakes1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("TENAGA KESEHATAN")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Tenaga Kesehatan!");
                 jadwalPasien nakes = new jadwalPasien();
+                jadwalPasien.saveIDNakes = jdbcLogin.getIDFromDB(UsernameTextField1.getText().trim());
+                nakes.getAllPasien();
                 nakes.setLocationRelativeTo(null);
                 nakes.setVisible(true);
                 this.dispose();
             }else if(apoteker1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("APOTEKER")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
+                System.out.println("Membuat Persetujaun....");
                 Persetujuan apoteker = new Persetujuan();
+                System.out.println("Membuka Persetujaun.....");
                 apoteker.setLocationRelativeTo(null);
                 apoteker.setVisible(true);
                 this.dispose();

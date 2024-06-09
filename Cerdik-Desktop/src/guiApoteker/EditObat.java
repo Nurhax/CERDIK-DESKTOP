@@ -29,7 +29,7 @@ public class EditObat extends javax.swing.JDialog {
     
     private void setObatDetails(Obat selectedObat){
         EditObatNama.setText(selectedObat.getNamaObat());
-        EditObatJenis.setText(selectedObat.getNamaObat());
+        EditObatJenis.setText(selectedObat.getJenisObat());
         EditObatStok.setText(Integer.toString(selectedObat.getStokObat()));
         EditObatSaran.setText(selectedObat.getSaranPenyajianObat());
     }

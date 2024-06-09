@@ -5,6 +5,7 @@
  */
 package cerdik.desktop;
 
+import static cerdik.desktop.Account.createID;
 import cerdik.desktop.JDBC.JDBC;
 import guiApoteker.Obat;
 import static guiApoteker.Obat.createID;
@@ -33,7 +34,7 @@ public class Apoteker extends Account implements SignUp,Displays{
             result.first();
             
             if(result.getString("Password").equals(Password) && result.getString("Role").equals("APOTEKER")){
-                return "PASIEN";
+                return "APOTEKER";
             }
             
             if(!result.getString("Password").equals(Password)){

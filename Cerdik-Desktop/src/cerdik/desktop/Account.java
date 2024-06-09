@@ -19,6 +19,15 @@ public abstract class Account {
     private String ID;
     private String Role;
     
+    public Account(){
+        
+    }
+    
+    public Account(String user, String ID){
+        this.Username = user;
+        this.ID = ID;
+    }
+    
     public abstract String Login(String Username, String Password);
     //abstract method karena implementasi semua jenis role akan sama
 

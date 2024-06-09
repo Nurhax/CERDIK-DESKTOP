@@ -6,6 +6,7 @@
 package guiApoteker;
 
 import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
 import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,24 +28,28 @@ public class Persetujuan extends javax.swing.JFrame {
      * Creates new form Persetujuan
      */
     public Persetujuan() {
+        System.out.println("Inisiasi Persetujuan...");
         initComponents();
+        System.out.println("Loading List..");
         loadJadwalList();
     }
     private void loadJadwalList() {
         JDBC db = new JDBC();
+            System.out.println("hi");
         List<Jadwal> jadwalList = db.getJadwalList();
         DefaultListModel<String> listModel = new DefaultListModel<>();
 
-        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
-
+        System.out.println("Melihat loop...");
         for (Jadwal jadwal : jadwalList) {
+            System.out.println("IN LOOP!!!!");
             try {
                 String originalDateStr = String.valueOf(jadwal.getStart_Date());
                 Date originalDate = (Date) originalFormat.parse(originalDateStr);
                 String formattedDate = targetFormat.format(originalDate);
                 if (!jadwal.getIsConfirmedApoteker()&& jadwal.getIsConfirmedNakes()){
-                    listModel.addElement(jadwal.getNamaPasien() + " - " + formattedDate);
+                    listModel.addElement(jadwal.getNamaObat()+" - " +jadwal.getNamaPasien() + " - " + formattedDate);
                 }
             } catch (ParseException e) {
                 System.out.println("Error parsing date: " + e.getMessage());
@@ -55,31 +61,34 @@ public class Persetujuan extends javax.swing.JFrame {
         ListJadwal.removeAll(); // This removes all rows from the table model
     }
     
-    private Jadwal getSelectedJadwal() {
+   private Jadwal getSelectedJadwal() {
     int selectedIndex = ListJadwal.getSelectedIndex();
     if (selectedIndex >= 0) {
-        String selectedValue = (String) ListJadwal.getSelectedValue();
-        String startDateFormatted = selectedValue.split(" - ")[1];  // Extract the start date from the selected value
-        
-        // Convert the formatted date back to the database format (YYYYMMDD)
+        String selectedValue = ListJadwal.getSelectedValue();
+        // Assuming the selected value is in the format: ObatName - NamaPasien - StartDate
+        String[] parts = selectedValue.split(" - ");
+        String obatName = parts[0];
+        String startDateFormatted = parts[2]; // Extract the start date from the selected value
+
+        // Convert the formatted date back to the database format (YYYY-MM-DD)
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate startDate = LocalDate.parse(startDateFormatted, formatter);
-        String startDateDBFormat = startDate.format(DateTimeFormatter.BASIC_ISO_DATE);  // Convert to YYYYMMDD format
-        
+        String startDateDBFormat = startDate.format(DateTimeFormatter.ISO_LOCAL_DATE); // Convert to YYYY-MM-DD format
+
         JDBC db = new JDBC();
-        Jadwal jadwal = db.getJadwalDetails(startDateDBFormat);
-        
+        Jadwal jadwal = db.getJadwalDetails(startDateDBFormat, obatName);
+
         // Debugging information
         if (jadwal == null) {
-            System.out.println("No Jadwal found for Start Date: " + startDateDBFormat);
+            System.out.println("No Jadwal found for Start Date: " + startDateDBFormat + " and ObatName: " + obatName);
         }
-        
+
         return jadwal;
     } else {
         JOptionPane.showMessageDialog(null, "No row selected", "Error", JOptionPane.WARNING_MESSAGE);
         return null;
+        }
     }
-}
     
     
     /**
@@ -126,6 +135,11 @@ public class Persetujuan extends javax.swing.JFrame {
         });
 
         jButton4.setText("Logout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -268,11 +282,23 @@ public class Persetujuan extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void blmDisetujuiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blmDisetujuiButtonActionPerformed
-        EditJadwal tolak = new EditJadwal();
-        tolak.setLocationRelativeTo(null);
+        Jadwal selectedJadwal = getSelectedJadwal();
+        System.out.println(selectedJadwal.getNamaObat());
+        editJadwal tolak = new editJadwal(getSelectedJadwal());
+        tolak.setExtendedState(JFrame.MAXIMIZED_BOTH);
         tolak.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_blmDisetujuiButtonActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
   
     /**
      * @param args the command line arguments

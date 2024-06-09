@@ -9,7 +9,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+
 
 /**
  *
@@ -19,7 +20,25 @@ public class Pasien extends Account implements SignUp,Displays{
     private int Usia;
     private String Nama;    
     private String Gender;
+    private String Gejala;
+    private String Obat;
 
+    public static ArrayList<Pasien> listPasien = new ArrayList<>();
+    
+    public Pasien(){}
+    
+    public Pasien(String username, String ID, String gejala, String Obat){
+        super(username,ID);
+        this.Gejala = gejala;
+        this.Obat = Obat;
+    }
+    
+    public Pasien(String Fullname, String Gender, int Usia){
+        this.Usia = Usia;
+        this.Nama = Fullname;
+        this.Gender = Gender;
+    }
+    
     public String getNama() {
         return Nama;
     }
@@ -43,23 +62,46 @@ public class Pasien extends Account implements SignUp,Displays{
     public void setGender(String Gender) {
         this.Gender = Gender;
     }
+
+    public String getGejala() {
+        return Gejala;
+    }
+
+    public void setGejala(String Gejala) {
+        this.Gejala = Gejala;
+    }
+
+    public String getObat() {
+        return Obat;
+    }
+
+    public void setObat(String Obat) {
+        this.Obat = Obat;
+    }
+    
     
     
     
     @Override
-    public String Login(String Username, String Password) {
+    public String Login(String Username, String Pass) {
         try{
             Connection cariUsername = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = cariUsername.createStatement();
+            System.out.println("SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'");
             String getUsernameQuery = "SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'";
             ResultSet result = statement.executeQuery(getUsernameQuery);
             result.first();
+            System.out.println("'"+result.getString("Role")+"' = '"+"PASIEN");
+                    
             
-            if(result.getString("Password").equals(Password) && result.getString("Role").equals("PASIEN")){
+            System.out.println(result.getString("Password").equals(Pass));
+            if(result.getString("Password").equals(Pass) && result.getString("Role").equals("PASIEN")){
+                System.out.println("Hi Pasien!");
                 return "PASIEN";
             }
             
-            if(!result.getString("Password").equals(Password)){
+            if(!result.getString("Password").equals(Pass)){
+                System.out.println("PASSWORD SALAH");
                 return "PASSWORD SALAH!";
             }
             

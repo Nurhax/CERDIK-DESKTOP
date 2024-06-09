@@ -5,6 +5,7 @@
  */
 package guiApoteker;
 
+import cerdik.desktop.Login_UI;
 import uinakes.*;
 import javax.swing.JOptionPane;
 
@@ -386,10 +387,12 @@ public class helpCenter extends javax.swing.JFrame {
     }//GEN-LAST:event_pertanyaan5MouseClicked
 
     private void LogoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutButtonActionPerformed
-        // TODO add your handling code here:
         int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
         if (i == 0) {
-            System.exit(0);
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
         }
     }//GEN-LAST:event_LogoutButtonActionPerformed
 

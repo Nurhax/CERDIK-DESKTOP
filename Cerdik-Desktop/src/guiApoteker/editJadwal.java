@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package uinakes;
+package guiApoteker;
 
+import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Pasien;
+import uinakes.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,8 +26,22 @@ public class editJadwal extends javax.swing.JFrame {
     /**
      * Creates new form tambahJadwal
      */
-    public editJadwal() {
+    private int id;
+    public editJadwal(Jadwal jadwal) {
         initComponents();
+        setJadwalDetails(jadwal);
+        this.id = jadwal.getIDJadwal();
+    }
+    private void setJadwalDetails(Jadwal SelectedJadwal){
+        Pasien namaPasien;
+        namaPasien = JDBC.getPasienDetails(SelectedJadwal);
+        NamaPlaceHolder.setText(namaPasien.getNama());
+        IDPasienPlaceHolder.setText(Integer.toString(SelectedJadwal.getIDPasien()));
+        jadwalMulaiTextField.setText(SelectedJadwal.getStart_Date());
+        jadwalSelesaiTextField.setText(SelectedJadwal.getEnd_Date());
+        gejalaTextField.setText(SelectedJadwal.getGejala());
+        inputDosisObat.setText(SelectedJadwal.getDosis());
+        
     }
 
     /**
@@ -294,14 +311,13 @@ public class editJadwal extends javax.swing.JFrame {
         try{
             Connection editDataPasien = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = editDataPasien.createStatement();
-            String editQuery = "UPDATE JADWAL SET START_DATE = " + "'" + jadwalMulaiTextField.getText() + "'," + "END_DATE = " + "'" + jadwalSelesaiTextField.getText() + "'," + "GEJALA = " + "'" + gejalaTextField.getText() + "'," + "DOSIS = " + "'" + inputDosisObat.getText() + "'," + "IDOBAT = " + simpanIDObat +"ISConfirmed Apoteker =1, IsConfirmed Nakes = 0"+ " WHERE IDJADWAL = " + simpanIDJadwal ;
+            String editQuery = "UPDATE JADWAL SET START_DATE = " + "'" + jadwalMulaiTextField.getText() + "'," + "END_DATE = " + "'" + jadwalSelesaiTextField.getText() + "'," + "GEJALA = " + "'" + gejalaTextField.getText() + "'," + "DOSIS = " + "'" + inputDosisObat.getText() + "'," + "IDOBAT = " + simpanIDObat + ",ISConfirmedApoteker =1, IsConfirmedNakes = 0"+ " WHERE IDJADWAL = " + this.id ;
             System.out.println(editQuery);
             statement.executeUpdate(editQuery);
             editDataPasien.close();
             statement.close();
             JOptionPane.showMessageDialog(this,"Data telah diedit!");
-            jadwalPasien gantiFrame = new jadwalPasien();
-            gantiFrame.getAllPasien();
+            Persetujuan gantiFrame = new Persetujuan();
             gantiFrame.setLocationRelativeTo(null);
             gantiFrame.setVisible(true);
             this.dispose();
@@ -359,8 +375,10 @@ public class editJadwal extends javax.swing.JFrame {
                               " AND IDNAKES = " + jadwalPasien.saveIDNakes + 
                               " AND GEJALA = '" + simpanGejala + 
                               "' AND IDOBAT = (SELECT IDOBAT FROM OBAT WHERE OBAT.NAMA = '" + simpanNamaObat + "')";
+            System.out.println(queryGetIDJadwal);
             ResultSet result = statement.executeQuery(queryGetIDJadwal);
             result.first();
+            System.out.println(result);
             simpanIDJadwal = result.getInt("IDJADWAL");
             getIDJadwal.close();
             statement.close();
@@ -412,11 +430,13 @@ public class editJadwal extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+        //</editor-fold>
+        //</editor-fold>
+        Jadwal n = new Jadwal(1,1,"1","1",0,1);
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new editJadwal().setVisible(true);
+                new editJadwal(n).setVisible(true);
             }
         });
     }

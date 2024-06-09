@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import static cerdik.desktop.Apoteker.*;
+import cerdik.desktop.Login_UI;
 
 /**
  *
@@ -101,6 +102,11 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
         });
 
         jButton4.setText("Logout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -260,6 +266,16 @@ public class InputDeleteLihatDatabase extends javax.swing.JFrame {
         clearObatList();
         loadObatList();
     }//GEN-LAST:event_EditObatButtonActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
