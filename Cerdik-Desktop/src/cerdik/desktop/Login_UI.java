@@ -205,7 +205,9 @@ public class Login_UI extends javax.swing.JFrame {
                 this.dispose();
             }else if(apoteker1.Login(UsernameTextField1.getText().trim(), PasswordTextField1.getText().trim()).equals("APOTEKER")){
                 JOptionPane.showMessageDialog(this, "Kamu login sebagai Apoteker!");
+                System.out.println("Membuat Persetujaun....");
                 Persetujuan apoteker = new Persetujuan();
+                System.out.println("Membuka Persetujaun.....");
                 apoteker.setLocationRelativeTo(null);
                 apoteker.setVisible(true);
                 this.dispose();

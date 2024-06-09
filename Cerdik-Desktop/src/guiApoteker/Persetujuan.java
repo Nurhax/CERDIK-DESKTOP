@@ -5,6 +5,19 @@
  */
 package guiApoteker;
 
+import cerdik.desktop.JDBC.JDBC;
+import cerdik.desktop.Login_UI;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author NITRO 5
@@ -15,9 +28,69 @@ public class Persetujuan extends javax.swing.JFrame {
      * Creates new form Persetujuan
      */
     public Persetujuan() {
+        System.out.println("Inisiasi Persetujuan...");
         initComponents();
+        System.out.println("Loading List..");
+        loadJadwalList();
     }
+    private void loadJadwalList() {
+        JDBC db = new JDBC();
+            System.out.println("hi");
+        List<Jadwal> jadwalList = db.getJadwalList();
+        DefaultListModel<String> listModel = new DefaultListModel<>();
 
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat targetFormat = new SimpleDateFormat("dd-MM-yyyy");
+        System.out.println("Melihat loop...");
+        for (Jadwal jadwal : jadwalList) {
+            System.out.println("IN LOOP!!!!");
+            try {
+                String originalDateStr = String.valueOf(jadwal.getStart_Date());
+                Date originalDate = (Date) originalFormat.parse(originalDateStr);
+                String formattedDate = targetFormat.format(originalDate);
+                if (!jadwal.getIsConfirmedApoteker()&& jadwal.getIsConfirmedNakes()){
+                    listModel.addElement(jadwal.getNamaObat()+" - " +jadwal.getNamaPasien() + " - " + formattedDate);
+                }
+            } catch (ParseException e) {
+                System.out.println("Error parsing date: " + e.getMessage());
+            }
+        ListJadwal.setModel(listModel);
+        }
+    }
+     private void clearJadwalList() {
+        ListJadwal.removeAll(); // This removes all rows from the table model
+    }
+    
+   private Jadwal getSelectedJadwal() {
+    int selectedIndex = ListJadwal.getSelectedIndex();
+    if (selectedIndex >= 0) {
+        String selectedValue = ListJadwal.getSelectedValue();
+        // Assuming the selected value is in the format: ObatName - NamaPasien - StartDate
+        String[] parts = selectedValue.split(" - ");
+        String obatName = parts[0];
+        String startDateFormatted = parts[2]; // Extract the start date from the selected value
+
+        // Convert the formatted date back to the database format (YYYY-MM-DD)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate startDate = LocalDate.parse(startDateFormatted, formatter);
+        String startDateDBFormat = startDate.format(DateTimeFormatter.ISO_LOCAL_DATE); // Convert to YYYY-MM-DD format
+
+        JDBC db = new JDBC();
+        Jadwal jadwal = db.getJadwalDetails(startDateDBFormat, obatName);
+
+        // Debugging information
+        if (jadwal == null) {
+            System.out.println("No Jadwal found for Start Date: " + startDateDBFormat + " and ObatName: " + obatName);
+        }
+
+        return jadwal;
+    } else {
+        JOptionPane.showMessageDialog(null, "No row selected", "Error", JOptionPane.WARNING_MESSAGE);
+        return null;
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -34,9 +107,9 @@ public class Persetujuan extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
-        jButton5 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        ListJadwal = new javax.swing.JList<>();
+        SudahDisetujuiButton = new javax.swing.JButton();
+        blmDisetujuiButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -62,6 +135,11 @@ public class Persetujuan extends javax.swing.JFrame {
         });
 
         jButton4.setText("Logout");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -97,16 +175,21 @@ public class Persetujuan extends javax.swing.JFrame {
             }
         });
 
-        jScrollPane1.setViewportView(jList1);
+        jScrollPane1.setViewportView(ListJadwal);
 
-        jButton5.setText("Sudah Disetujui");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        SudahDisetujuiButton.setText("Sudah Disetujui");
+        SudahDisetujuiButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                SudahDisetujuiButtonActionPerformed(evt);
             }
         });
 
-        jButton15.setText("Belum Disetujui");
+        blmDisetujuiButton.setText("Belum Disetujui");
+        blmDisetujuiButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                blmDisetujuiButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("List Persetujuan Jadwal Pasien");
@@ -123,9 +206,9 @@ public class Persetujuan extends javax.swing.JFrame {
                         .addGap(84, 84, 84)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(SudahDisetujuiButton, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(105, 105, 105)
-                                .addComponent(jButton15, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(blmDisetujuiButton, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
                                 .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -149,8 +232,8 @@ public class Persetujuan extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton14)
-                            .addComponent(jButton5)
-                            .addComponent(jButton15)))
+                            .addComponent(SudahDisetujuiButton)
+                            .addComponent(blmDisetujuiButton)))
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -176,13 +259,46 @@ public class Persetujuan extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void SudahDisetujuiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SudahDisetujuiButtonActionPerformed
+    Jadwal selectedJadwal = getSelectedJadwal();
+    JDBC db =new JDBC();
+    if (selectedJadwal != null) {
+        System.out.println("Menyetujui Jadwal" + selectedJadwal.getStart_Date());
+        db.approveJadwalNakes(selectedJadwal);
+        selectedJadwal.setIsConfirmedApoteker(true);
+        clearJadwalList();
+        loadJadwalList();
+    } else {
+        System.out.println("No Jadwal selected or found.");
+    }
+
+    }//GEN-LAST:event_SudahDisetujuiButtonActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+        helpCenter gantiFrame = new helpCenter();
+        gantiFrame.setLocationRelativeTo(null);
+        gantiFrame.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void blmDisetujuiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blmDisetujuiButtonActionPerformed
+        Jadwal selectedJadwal = getSelectedJadwal();
+        System.out.println(selectedJadwal.getNamaObat());
+        editJadwal tolak = new editJadwal(getSelectedJadwal());
+        tolak.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        tolak.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_blmDisetujuiButtonActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Apakah Anda yakin ingin keluar dari aplikasi?", "Select", JOptionPane.YES_NO_OPTION);
+        if (i == 0) {
+            Login_UI backtoLogin = new Login_UI();
+            backtoLogin.setLocationRelativeTo(null);
+            backtoLogin.setVisible(true);
+             this.dispose();
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
   
     /**
      * @param args the command line arguments
@@ -222,15 +338,15 @@ public class Persetujuan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JList<String> ListJadwal;
+    private javax.swing.JButton SudahDisetujuiButton;
+    private javax.swing.JButton blmDisetujuiButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

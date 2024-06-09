@@ -20,8 +20,8 @@ public class MainProgram {
      */
     public static void main(String[] args) throws SQLException {
         // TODO code application logic here
-        Pasien test = new Pasien();
-        System.out.println(createID());
+        Login_UI newForm = new Login_UI();
+        newForm.show();
         
     }
     

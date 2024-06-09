@@ -323,6 +323,7 @@ public class konfirmasiObat extends javax.swing.JFrame {
                 Connection tidakSetujuJadwal = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
                 Statement statement = tidakSetujuJadwal.createStatement();
                 String tidakSetujuQuery = "UPDATE JADWAL SET ISCONFIRMEDNAKES = 1, ISCONFIRMEDAPOTEKER = 0 WHERE IDOBAT = " + simpanIDObat + " AND IDPASIEN = " + idPasienSimpan + " AND IDJADWAL = (SELECT IDJADWAL FROM JADWAL WHERE IDPASIEN = " + idPasienSimpan + " AND IDNAKES = " + jadwalPasien.saveIDNakes + " AND IDOBAT = " + simpanIDObat + ")";
+                statement.executeUpdate(tidakSetujuQuery);
                 tidakSetujuJadwal.close();
                 statement.close();
                 JOptionPane.showMessageDialog(this, "Jadwal tidak disetujui dan akan dilihat kembali oleh apoteker!");

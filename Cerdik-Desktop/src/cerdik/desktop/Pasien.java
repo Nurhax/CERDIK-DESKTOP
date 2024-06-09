@@ -83,19 +83,25 @@ public class Pasien extends Account implements SignUp,Displays{
     
     
     @Override
-    public String Login(String Username, String Password) {
+    public String Login(String Username, String Pass) {
         try{
             Connection cariUsername = DriverManager.getConnection("jdbc:mysql://localhost/cerdik","root","");
             Statement statement = cariUsername.createStatement();
+            System.out.println("SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'");
             String getUsernameQuery = "SELECT * FROM AKUN WHERE USERNAME = " + "'" + Username + "'";
             ResultSet result = statement.executeQuery(getUsernameQuery);
             result.first();
+            System.out.println("'"+result.getString("Role")+"' = '"+"PASIEN");
+                    
             
-            if(result.getString("Password").equals(Password) && result.getString("Role").equals("PASIEN")){
+            System.out.println(result.getString("Password").equals(Pass));
+            if(result.getString("Password").equals(Pass) && result.getString("Role").equals("PASIEN")){
+                System.out.println("Hi Pasien!");
                 return "PASIEN";
             }
             
-            if(!result.getString("Password").equals(Password)){
+            if(!result.getString("Password").equals(Pass)){
+                System.out.println("PASSWORD SALAH");
                 return "PASSWORD SALAH!";
             }
             

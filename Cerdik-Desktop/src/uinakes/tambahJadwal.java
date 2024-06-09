@@ -354,7 +354,7 @@ public class tambahJadwal extends javax.swing.JFrame {
                             gejalaTextField2.getText() + "', '" +
                             inputDosisObat2.getText() + "', '" +
                             jadwalMulaiTextField2.getText() + "', '" +
-                            jadwalSelesaiTextField2.getText() + "', 0, 1)";
+                            jadwalSelesaiTextField2.getText() + "', 1, 0)";
                     statement.executeUpdate(insertJadwalQuery);
                     statement.executeUpdate(insertJadwalQuery);
                     insertDataJadwal.close();
