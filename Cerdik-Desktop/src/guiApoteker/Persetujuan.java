@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import uinakes.editJadwal;
 
 /**
  *
@@ -284,7 +285,7 @@ public class Persetujuan extends javax.swing.JFrame {
     private void blmDisetujuiButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_blmDisetujuiButtonActionPerformed
         Jadwal selectedJadwal = getSelectedJadwal();
         System.out.println(selectedJadwal.getNamaObat());
-        editJadwal tolak = new editJadwal(getSelectedJadwal());
+        editJadwal2 tolak = new editJadwal2(getSelectedJadwal());
         tolak.setExtendedState(JFrame.MAXIMIZED_BOTH);
         tolak.setVisible(true);
         this.dispose();
